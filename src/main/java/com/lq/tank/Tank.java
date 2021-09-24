@@ -12,16 +12,7 @@ public class Tank {
 
     public static void main(String[] args) {
 
-        Frame frame = new Frame();
-        frame.setSize(500,500);
-        frame.setResizable(false);
-        frame.setTitle("坦克大战");
-        frame.addWindowListener(new WindowAdapter() {
-            @Override
-            public void windowClosing(WindowEvent e) {
-                System.exit(0);
-            }
-        });
-        frame.setVisible(true);
+        TaskFrame taskFrame = new TaskFrame();
+
     }
 }
