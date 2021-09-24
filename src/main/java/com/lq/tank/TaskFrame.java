@@ -10,8 +10,10 @@ import java.awt.event.WindowEvent;
  */
 public class TaskFrame extends Frame {
 
+    int x = 200, y = 200;
+
     public TaskFrame() throws HeadlessException {
-        setSize(500,500);
+        setSize(500, 500);
         setResizable(false);
         setTitle("坦克大战");
         addWindowListener(new WindowAdapter() {
@@ -25,6 +27,9 @@ public class TaskFrame extends Frame {
 
     @Override
     public void paint(Graphics g) {
-        g.fillRect(200,200,50,50);
+        System.out.println(x+" "+y);
+        g.fillRect(x, y, 50, 50);
+        x += 20;
+        y += 20;
     }
 }
