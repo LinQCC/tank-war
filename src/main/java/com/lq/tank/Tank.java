@@ -9,10 +9,5 @@ public class Tank {
     public static void main(String[] args) throws InterruptedException {
 
         TaskFrame taskFrame = new TaskFrame();
-
-        while(true){
-            Thread.sleep(500);
-            taskFrame.repaint();
-        }
     }
 }

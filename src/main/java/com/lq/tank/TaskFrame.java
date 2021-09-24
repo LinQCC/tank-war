@@ -15,7 +15,7 @@ public class TaskFrame extends Frame {
     int x = 200, y = 200;
 
     public TaskFrame() throws HeadlessException {
-        setSize(500, 500);
+        setSize(1000, 1000);
         setResizable(false);
         setTitle("坦克大战");
         addWindowListener(new WindowAdapter() {
@@ -32,18 +32,62 @@ public class TaskFrame extends Frame {
     @Override
     public void paint(Graphics g) {
         g.fillRect(x, y, 50, 50);
-        x += 10;
-        y += 10;
     }
 
     class MyKeyListener extends KeyAdapter {
 
+        boolean bL = false;
+        boolean bU = false;
+        boolean bR = false;
+        boolean bD = false;
+
         @Override
         public void keyPressed(KeyEvent e) {
-            System.out.println("key pressed : " + e.getKeyCode());
-            x += 10;
-            y += 10;
+            switch (e.getKeyCode()){
+                case KeyEvent.VK_LEFT:
+                    bL = true;
+                    break;
+                case KeyEvent.VK_RIGHT:
+                    bR = true;
+                    break;
+                case KeyEvent.VK_UP:
+                    bU = true;
+                    break;
+                case KeyEvent.VK_DOWN:
+                    bD = true;
+                    break;
+            }
+            if(bL){
+                x -= 10;
+            }
+            if(bU){
+                y -= 10;
+            }
+            if(bR){
+                x += 10;
+            }
+            if(bD){
+                y += 10;
+            }
             repaint();
+        }
+
+        @Override
+        public void keyReleased(KeyEvent e) {
+            switch (e.getKeyCode()){
+                case KeyEvent.VK_LEFT:
+                    bL = false;
+                    break;
+                case KeyEvent.VK_RIGHT:
+                    bR = false;
+                    break;
+                case KeyEvent.VK_UP:
+                    bU = false;
+                    break;
+                case KeyEvent.VK_DOWN:
+                    bD = false;
+                    break;
+            }
         }
     }
 }
