@@ -1,6 +1,8 @@
 package com.lq.tank;
 
 import java.awt.*;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
@@ -22,14 +24,26 @@ public class TaskFrame extends Frame {
                 System.exit(0);
             }
         });
+
+        addKeyListener(new MyKeyListener());
         setVisible(true);
     }
 
     @Override
     public void paint(Graphics g) {
-        System.out.println(x+" "+y);
         g.fillRect(x, y, 50, 50);
-        x += 20;
-        y += 20;
+        x += 10;
+        y += 10;
+    }
+
+    class MyKeyListener extends KeyAdapter {
+
+        @Override
+        public void keyPressed(KeyEvent e) {
+            System.out.println("key pressed : " + e.getKeyCode());
+            x += 10;
+            y += 10;
+            repaint();
+        }
     }
 }
