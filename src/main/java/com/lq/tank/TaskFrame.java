@@ -13,6 +13,8 @@ import java.awt.event.WindowEvent;
 public class TaskFrame extends Frame {
 
     int x = 200, y = 200;
+    private static final int SPEED = 10;
+    DirectionEnum dir = DirectionEnum.DOWN;
 
     public TaskFrame() throws HeadlessException {
         setSize(1000, 1000);
@@ -31,7 +33,22 @@ public class TaskFrame extends Frame {
 
     @Override
     public void paint(Graphics g) {
+
         g.fillRect(x, y, 50, 50);
+        switch (dir){
+            case LEFT:
+                x -= SPEED;
+                break;
+            case UP:
+                y -= SPEED;
+                break;
+            case RIGHT:
+                x += SPEED;
+                break;
+            case DOWN:
+                y += SPEED;
+                break;
+        }
     }
 
     class MyKeyListener extends KeyAdapter {
@@ -57,18 +74,7 @@ public class TaskFrame extends Frame {
                     bD = true;
                     break;
             }
-            if(bL){
-                x -= 10;
-            }
-            if(bU){
-                y -= 10;
-            }
-            if(bR){
-                x += 10;
-            }
-            if(bD){
-                y += 10;
-            }
+            setMainTankDir();
             repaint();
         }
 
@@ -88,6 +94,23 @@ public class TaskFrame extends Frame {
                     bD = false;
                     break;
             }
+            setMainTankDir();
         }
+
+        private void setMainTankDir() {
+            if(bL){
+                dir = DirectionEnum.LEFT;
+            }
+            if(bU){
+                dir = DirectionEnum.UP;
+            }
+            if(bR){
+                dir = DirectionEnum.RIGHT;
+            }
+            if(bD){
+                dir = DirectionEnum.DOWN;
+            }
+        }
+
     }
 }
