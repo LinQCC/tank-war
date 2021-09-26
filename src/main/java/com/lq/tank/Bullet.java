@@ -20,10 +20,15 @@ public class Bullet {
 
     private DirectionEnum dir;
 
-    public Bullet(int x, int y, DirectionEnum dir) {
+    private boolean live = true;
+
+    private TaskFrame taskFrame;
+
+    public Bullet(int x, int y, DirectionEnum dir, TaskFrame taskFrame) {
         this.x = x;
         this.y = y;
         this.dir = dir;
+        this.taskFrame = taskFrame;
     }
 
     public int getX() {
@@ -50,17 +55,28 @@ public class Bullet {
         this.dir = dir;
     }
 
-    public void paint(Graphics g){
+    public boolean isLive() {
+        return live;
+    }
+
+    public void setLive(boolean live) {
+        this.live = live;
+    }
+
+    public void paint(Graphics g) {
+        if (!live) {
+            taskFrame.bulletList.remove(this);
+        }
         Color color = g.getColor();
         g.setColor(Color.RED);
-        g.fillOval(x,y,WIDTH,HEIGHT);
+        g.fillOval(x, y, WIDTH, HEIGHT);
         g.setColor(color);
         move();
     }
 
     private void move() {
 
-        switch (dir){
+        switch (dir) {
             case LEFT:
                 x -= SPEED;
                 break;
@@ -73,6 +89,9 @@ public class Bullet {
             case DOWN:
                 y += SPEED;
                 break;
+        }
+        if (x < 0 || y < 0 || x > TaskFrame.GAME_WIDTH || y > TaskFrame.GAME_HEIGHT) {
+            live = false;
         }
     }
 }

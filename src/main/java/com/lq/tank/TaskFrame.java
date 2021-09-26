@@ -1,10 +1,14 @@
 package com.lq.tank;
 
+
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * @author babei
@@ -13,9 +17,9 @@ import java.awt.event.WindowEvent;
 public class TaskFrame extends Frame {
 
     Tank tank = new Tank(200,200,DirectionEnum.DOWN,this);
-    Bullet bullet = new Bullet(300,300,DirectionEnum.DOWN);
-    private static final int GAME_WIDTH = 800;
-    private static final int GAME_HEIGHT = 600;
+    List<Bullet> bulletList = new ArrayList<>();
+    public static final int GAME_WIDTH = 800;
+    public static final int GAME_HEIGHT = 600;
 
     public TaskFrame() throws HeadlessException {
         setSize(GAME_WIDTH, GAME_HEIGHT);
@@ -51,8 +55,23 @@ public class TaskFrame extends Frame {
     @Override
     public void paint(Graphics g) {
 
+        Color color = g.getColor();
+        g.setColor(Color.WHITE);
+        g.drawString("子弹数量:"+bulletList.size(),100,100);
+        g.setColor(color);
        tank.paint(g);
-       bullet.paint(g);
+
+       for(int i= 0;i<bulletList.size();i++){
+           bulletList.get(i).paint(g);
+       }
+
+       //另一种方式删除子弹，使用迭代器来删除，该方式不会报错
+/*        for( Iterator<Bullet> iterator = bulletList.iterator();iterator.hasNext();){
+            Bullet bullet = iterator.next();
+            if(!bullet.isLive()){
+                iterator.remove();
+            }
+        }*/
 
     }
 
