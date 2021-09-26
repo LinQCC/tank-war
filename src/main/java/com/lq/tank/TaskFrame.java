@@ -12,9 +12,8 @@ import java.awt.event.WindowEvent;
  */
 public class TaskFrame extends Frame {
 
-    int x = 200, y = 200;
-    private static final int SPEED = 10;
-    DirectionEnum dir = DirectionEnum.DOWN;
+    Tank tank = new Tank(200,200,DirectionEnum.DOWN);
+    Bullet bullet = new Bullet(300,300,DirectionEnum.DOWN);
 
     public TaskFrame() throws HeadlessException {
         setSize(1000, 1000);
@@ -34,21 +33,9 @@ public class TaskFrame extends Frame {
     @Override
     public void paint(Graphics g) {
 
-        g.fillRect(x, y, 50, 50);
-        switch (dir){
-            case LEFT:
-                x -= SPEED;
-                break;
-            case UP:
-                y -= SPEED;
-                break;
-            case RIGHT:
-                x += SPEED;
-                break;
-            case DOWN:
-                y += SPEED;
-                break;
-        }
+       tank.paint(g);
+       bullet.paint(g);
+
     }
 
     class MyKeyListener extends KeyAdapter {
@@ -75,7 +62,6 @@ public class TaskFrame extends Frame {
                     break;
             }
             setMainTankDir();
-            repaint();
         }
 
         @Override
@@ -98,17 +84,26 @@ public class TaskFrame extends Frame {
         }
 
         private void setMainTankDir() {
+
+            if(!bL && !bU && !bR && !bD){
+                tank.setMoving(false);
+            }
+
             if(bL){
-                dir = DirectionEnum.LEFT;
+                tank.setDirection(DirectionEnum.LEFT);
+                tank.setMoving(true);
             }
             if(bU){
-                dir = DirectionEnum.UP;
+                tank.setDirection(DirectionEnum.UP);
+                tank.setMoving(true);
             }
             if(bR){
-                dir = DirectionEnum.RIGHT;
+                tank.setDirection(DirectionEnum.RIGHT);
+                tank.setMoving(true);
             }
             if(bD){
-                dir = DirectionEnum.DOWN;
+                tank.setDirection(DirectionEnum.DOWN);
+                tank.setMoving(true);
             }
         }
 
