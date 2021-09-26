@@ -21,7 +21,7 @@ public class Tank {
 
     private boolean moving = false;
 
-    public Tank(int x, int y, DirectionEnum direction,TaskFrame taskFrame) {
+    public Tank(int x, int y, DirectionEnum direction, TaskFrame taskFrame) {
         this.x = x;
         this.y = y;
         this.direction = direction;
@@ -70,8 +70,8 @@ public class Tank {
     }
 
     private void move() {
-        if(moving){
-            switch (direction){
+        if (moving) {
+            switch (direction) {
                 case LEFT:
                     x -= SPEED;
                     break;
@@ -91,6 +91,6 @@ public class Tank {
     }
 
     public void fire() {
-        taskFrame.bulletList.add(new Bullet(x,y,direction,taskFrame));
+        taskFrame.bulletList.add(new Bullet(x + 25, y + 25, direction, taskFrame));
     }
 }
