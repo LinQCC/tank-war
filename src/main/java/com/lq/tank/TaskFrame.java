@@ -12,11 +12,13 @@ import java.awt.event.WindowEvent;
  */
 public class TaskFrame extends Frame {
 
-    Tank tank = new Tank(200,200,DirectionEnum.DOWN);
+    Tank tank = new Tank(200,200,DirectionEnum.DOWN,this);
     Bullet bullet = new Bullet(300,300,DirectionEnum.DOWN);
+    private static final int GAME_WIDTH = 800;
+    private static final int GAME_HEIGHT = 600;
 
     public TaskFrame() throws HeadlessException {
-        setSize(1000, 1000);
+        setSize(GAME_WIDTH, GAME_HEIGHT);
         setResizable(false);
         setTitle("坦克大战");
         addWindowListener(new WindowAdapter() {
@@ -28,6 +30,22 @@ public class TaskFrame extends Frame {
 
         addKeyListener(new MyKeyListener());
         setVisible(true);
+    }
+
+    Image offScreemImage = null;
+
+    @Override
+    public void update(Graphics g) {
+        if(offScreemImage == null){
+            offScreemImage = this.createImage(GAME_WIDTH,GAME_HEIGHT);
+        }
+        Graphics gOffScreen  = offScreemImage.getGraphics();
+        Color c = gOffScreen.getColor();
+        gOffScreen.setColor(Color.BLACK);
+        gOffScreen.fillRect(0,0,GAME_WIDTH,GAME_HEIGHT);
+        gOffScreen.setColor(c);
+        paint(gOffScreen);
+        g.drawImage(offScreemImage,0,0,null);
     }
 
     @Override
@@ -78,6 +96,9 @@ public class TaskFrame extends Frame {
                     break;
                 case KeyEvent.VK_DOWN:
                     bD = false;
+                    break;
+                case KeyEvent.VK_SPACE:
+                    tank.fire();
                     break;
             }
             setMainTankDir();
