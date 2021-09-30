@@ -10,6 +10,10 @@ public class Tank {
 
     private static final int SPEED = 5;
 
+    public static final int WIDTH = ResourceManager.tankU.getWidth();
+
+    public static final int HEIGHT = ResourceManager.tankU.getHeight();
+
     private int x;
 
     private int y;
@@ -66,16 +70,16 @@ public class Tank {
         g.fillRect(x, y, 50, 50);
         switch (direction) {
             case LEFT:
-                g.drawImage(ResourceManager.tankL,x,y,null);
+                g.drawImage(ResourceManager.tankL, x, y, null);
                 break;
             case UP:
-                g.drawImage(ResourceManager.tankU,x,y,null);
+                g.drawImage(ResourceManager.tankU, x, y, null);
                 break;
             case RIGHT:
-                g.drawImage(ResourceManager.tankR,x,y,null);
+                g.drawImage(ResourceManager.tankR, x, y, null);
                 break;
             case DOWN:
-                g.drawImage(ResourceManager.tankD,x,y,null);
+                g.drawImage(ResourceManager.tankD, x, y, null);
                 break;
             default:
         }
@@ -104,6 +108,8 @@ public class Tank {
     }
 
     public void fire() {
-        tankFrame.bulletList.add(new Bullet(x + 25, y + 25, direction, tankFrame));
+        int bx = x + WIDTH / 2 - Bullet.WIDTH / 2;
+        int by = y + HEIGHT / 2 - Bullet.HEIGHT / 2;
+        tankFrame.bulletList.add(new Bullet(bx, by, direction, tankFrame));
     }
 }

@@ -10,9 +10,9 @@ public class Bullet {
 
     private static final int SPEED = 10;
 
-    private static final int WIDTH = 5;
+    public static final int WIDTH = ResourceManager.bulletU.getWidth();
 
-    private static final int HEIGHT = 5;
+    public static final int HEIGHT = ResourceManager.bulletD.getHeight();
 
     private int x;
 
