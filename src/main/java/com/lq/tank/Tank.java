@@ -16,16 +16,16 @@ public class Tank {
 
     private DirectionEnum direction;
 
-    private TaskFrame taskFrame;
+    private TankFrame tankFrame;
 
 
     private boolean moving = false;
 
-    public Tank(int x, int y, DirectionEnum direction, TaskFrame taskFrame) {
+    public Tank(int x, int y, DirectionEnum direction, TankFrame tankFrame) {
         this.x = x;
         this.y = y;
         this.direction = direction;
-        this.taskFrame = taskFrame;
+        this.tankFrame = tankFrame;
     }
 
     public int getX() {
@@ -62,10 +62,23 @@ public class Tank {
 
     public void paint(Graphics g) {
 
-        Color c = g.getColor();
-        g.setColor(Color.BLUE);
+
         g.fillRect(x, y, 50, 50);
-        g.setColor(c);
+        switch (direction) {
+            case LEFT:
+                g.drawImage(ResourceManager.tankL,x,y,null);
+                break;
+            case UP:
+                g.drawImage(ResourceManager.tankU,x,y,null);
+                break;
+            case RIGHT:
+                g.drawImage(ResourceManager.tankR,x,y,null);
+                break;
+            case DOWN:
+                g.drawImage(ResourceManager.tankD,x,y,null);
+                break;
+            default:
+        }
         move();
     }
 
@@ -91,6 +104,6 @@ public class Tank {
     }
 
     public void fire() {
-        taskFrame.bulletList.add(new Bullet(x + 25, y + 25, direction, taskFrame));
+        tankFrame.bulletList.add(new Bullet(x + 25, y + 25, direction, tankFrame));
     }
 }

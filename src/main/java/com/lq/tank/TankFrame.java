@@ -1,27 +1,32 @@
 package com.lq.tank;
 
 
+import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
+
 
 /**
  * @author babei
  * @date 2021/9/25
  */
-public class TaskFrame extends Frame {
+public class TankFrame extends Frame {
 
     Tank tank = new Tank(200,200,DirectionEnum.DOWN,this);
     List<Bullet> bulletList = new ArrayList<>();
     public static final int GAME_WIDTH = 800;
     public static final int GAME_HEIGHT = 600;
 
-    public TaskFrame() throws HeadlessException {
+    public TankFrame() throws HeadlessException {
         setSize(GAME_WIDTH, GAME_HEIGHT);
         setResizable(false);
         setTitle("坦克大战");

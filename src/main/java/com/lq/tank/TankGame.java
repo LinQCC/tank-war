@@ -8,11 +8,11 @@ public class TankGame {
 
     public static void main(String[] args) throws InterruptedException {
 
-        TaskFrame taskFrame = new TaskFrame();
+        TankFrame tankFrame = new TankFrame();
 
         while (true){
             Thread.sleep(50);
-            taskFrame.repaint();
+            tankFrame.repaint();
         }
     }
 }

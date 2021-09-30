@@ -22,13 +22,13 @@ public class Bullet {
 
     private boolean live = true;
 
-    private TaskFrame taskFrame;
+    private TankFrame tankFrame;
 
-    public Bullet(int x, int y, DirectionEnum dir, TaskFrame taskFrame) {
+    public Bullet(int x, int y, DirectionEnum dir, TankFrame tankFrame) {
         this.x = x;
         this.y = y;
         this.dir = dir;
-        this.taskFrame = taskFrame;
+        this.tankFrame = tankFrame;
     }
 
     public int getX() {
@@ -65,12 +65,23 @@ public class Bullet {
 
     public void paint(Graphics g) {
         if (!live) {
-            taskFrame.bulletList.remove(this);
+            tankFrame.bulletList.remove(this);
         }
-        Color color = g.getColor();
-        g.setColor(Color.RED);
-        g.fillOval(x, y, WIDTH, HEIGHT);
-        g.setColor(color);
+        switch (dir) {
+            case LEFT:
+                g.drawImage(ResourceManager.bulletL, x, y, null);
+                break;
+            case UP:
+                g.drawImage(ResourceManager.bulletU, x, y, null);
+                break;
+            case RIGHT:
+                g.drawImage(ResourceManager.bulletR, x, y, null);
+                break;
+            case DOWN:
+                g.drawImage(ResourceManager.bulletD, x, y, null);
+                break;
+            default:
+        }
         move();
     }
 
@@ -90,7 +101,7 @@ public class Bullet {
                 y += SPEED;
                 break;
         }
-        if (x < 0 || y < 0 || x > TaskFrame.GAME_WIDTH || y > TaskFrame.GAME_HEIGHT) {
+        if (x < 0 || y < 0 || x > TankFrame.GAME_WIDTH || y > TankFrame.GAME_HEIGHT) {
             live = false;
         }
     }
