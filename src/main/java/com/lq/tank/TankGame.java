@@ -10,7 +10,12 @@ public class TankGame {
 
         TankFrame tankFrame = new TankFrame();
 
-        while (true){
+        //初始化敌方坦克
+        for (int i = 0; i < 5; i++) {
+            tankFrame.enemies.add(new Tank(50+i*50,200,DirectionEnum.DOWN,tankFrame));
+        }
+
+        while (true) {
             Thread.sleep(50);
             tankFrame.repaint();
         }

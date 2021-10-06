@@ -1,16 +1,11 @@
 package com.lq.tank;
 
 
-import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,8 +16,10 @@ import java.util.List;
  */
 public class TankFrame extends Frame {
 
-    Tank tank = new Tank(200,200,DirectionEnum.DOWN,this);
+    Tank tank = new Tank(200, 200, DirectionEnum.DOWN, this);
     List<Bullet> bulletList = new ArrayList<>();
+    List<Tank> enemies = new ArrayList<>();
+
     public static final int GAME_WIDTH = 800;
     public static final int GAME_HEIGHT = 600;
 
@@ -45,16 +42,16 @@ public class TankFrame extends Frame {
 
     @Override
     public void update(Graphics g) {
-        if(offScreemImage == null){
-            offScreemImage = this.createImage(GAME_WIDTH,GAME_HEIGHT);
+        if (offScreemImage == null) {
+            offScreemImage = this.createImage(GAME_WIDTH, GAME_HEIGHT);
         }
-        Graphics gOffScreen  = offScreemImage.getGraphics();
+        Graphics gOffScreen = offScreemImage.getGraphics();
         Color c = gOffScreen.getColor();
         gOffScreen.setColor(Color.BLACK);
-        gOffScreen.fillRect(0,0,GAME_WIDTH,GAME_HEIGHT);
+        gOffScreen.fillRect(0, 0, GAME_WIDTH, GAME_HEIGHT);
         gOffScreen.setColor(c);
         paint(gOffScreen);
-        g.drawImage(offScreemImage,0,0,null);
+        g.drawImage(offScreemImage, 0, 0, null);
     }
 
     @Override
@@ -62,21 +59,25 @@ public class TankFrame extends Frame {
 
         Color color = g.getColor();
         g.setColor(Color.WHITE);
-        g.drawString("子弹数量:"+bulletList.size(),100,100);
+        g.drawString("子弹数量:" + bulletList.size(), 100, 100);
         g.setColor(color);
-       tank.paint(g);
+        tank.paint(g);
 
-       for(int i= 0;i<bulletList.size();i++){
-           bulletList.get(i).paint(g);
-       }
+        for (int i = 0; i < bulletList.size(); i++) {
+            bulletList.get(i).paint(g);
+        }
 
-       //另一种方式删除子弹，使用迭代器来删除，该方式不会报错
+        //另一种方式删除子弹，使用迭代器来删除，该方式不会报错
 /*        for( Iterator<Bullet> iterator = bulletList.iterator();iterator.hasNext();){
             Bullet bullet = iterator.next();
             if(!bullet.isLive()){
                 iterator.remove();
             }
         }*/
+
+        for (int i = 0; i < enemies.size(); i++) {
+            enemies.get(i).paint(g);
+        }
 
     }
 
@@ -89,7 +90,7 @@ public class TankFrame extends Frame {
 
         @Override
         public void keyPressed(KeyEvent e) {
-            switch (e.getKeyCode()){
+            switch (e.getKeyCode()) {
                 case KeyEvent.VK_LEFT:
                     bL = true;
                     break;
@@ -108,7 +109,7 @@ public class TankFrame extends Frame {
 
         @Override
         public void keyReleased(KeyEvent e) {
-            switch (e.getKeyCode()){
+            switch (e.getKeyCode()) {
                 case KeyEvent.VK_LEFT:
                     bL = false;
                     break;
@@ -130,23 +131,23 @@ public class TankFrame extends Frame {
 
         private void setMainTankDir() {
 
-            if(!bL && !bU && !bR && !bD){
+            if (!bL && !bU && !bR && !bD) {
                 tank.setMoving(false);
             }
 
-            if(bL){
+            if (bL) {
                 tank.setDirection(DirectionEnum.LEFT);
                 tank.setMoving(true);
             }
-            if(bU){
+            if (bU) {
                 tank.setDirection(DirectionEnum.UP);
                 tank.setMoving(true);
             }
-            if(bR){
+            if (bR) {
                 tank.setDirection(DirectionEnum.RIGHT);
                 tank.setMoving(true);
             }
-            if(bD){
+            if (bD) {
                 tank.setDirection(DirectionEnum.DOWN);
                 tank.setMoving(true);
             }
