@@ -15,8 +15,8 @@ import java.util.List;
  * @date 2021/9/25
  */
 public class TankFrame extends Frame {
-    
-    Tank tank = new Tank(500, 500, DirectionEnum.DOWN, Group.GOOD,this);
+
+    public Tank tank = new Tank(500, 500, DirectionEnum.DOWN, Group.GOOD,this);
 
     List<Bullet> bulletList = new ArrayList<>();
 
@@ -67,8 +67,12 @@ public class TankFrame extends Frame {
         g.drawString("敌人数量:" + enemies.size(), 50, 130 );
         g.drawString("爆炸数量:" + explodes.size(), 50, 160 );
         g.setColor(color);
-        tank.paint(g);
 
+        if(tank != null){
+            tank.paint(g);
+        }
+
+        //绘制子弹
         for (int i = 0; i < bulletList.size(); i++) {
             bulletList.get(i).paint(g);
         }
@@ -91,6 +95,7 @@ public class TankFrame extends Frame {
             for(Tank tank : enemies){
                 bullet.collideWith(tank);
             }
+            bullet.collideWith(tank);
         }
 
         //绘制爆炸

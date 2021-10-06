@@ -81,7 +81,6 @@ public class Bullet {
     }
 
     public void collideWith(Tank tank) {
-
         if(this.group == tank.getGroup()){
             return;
         }

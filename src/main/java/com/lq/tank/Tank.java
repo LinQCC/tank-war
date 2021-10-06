@@ -40,7 +40,7 @@ public class Tank {
         this.direction = direction;
         this.group = group;
         this.tankFrame = tankFrame;
-        if(this.group == Group.BAD){
+        if (this.group == Group.BAD) {
             moving = true;
         }
     }
@@ -48,7 +48,12 @@ public class Tank {
     public void paint(Graphics g) {
 
         if (!alive) {
-            tankFrame.enemies.remove(this);
+            if (this.group == Group.GOOD) {
+                tankFrame.tank.setX(1000);
+                tankFrame.tank.setY(1000);
+            } else {
+                tankFrame.enemies.remove(this);
+            }
         }
 
         switch (direction) {
@@ -112,7 +117,7 @@ public class Tank {
 
         //敌方坦克随机转向
         if (this.group == Group.BAD) {
-            if(random.nextInt(40) > 38){
+            if (random.nextInt(40) > 38) {
                 this.direction = DirectionEnum.values()[random.nextInt(DirectionEnum.values().length)];
             }
         }
