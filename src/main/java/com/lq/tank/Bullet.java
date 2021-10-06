@@ -20,7 +20,7 @@ public class Bullet {
 
     private DirectionEnum dir;
 
-    private boolean live = true;
+    private boolean alive = true;
 
     private TankFrame tankFrame;
 
@@ -55,16 +55,16 @@ public class Bullet {
         this.dir = dir;
     }
 
-    public boolean isLive() {
-        return live;
+    public boolean isAlive() {
+        return alive;
     }
 
-    public void setLive(boolean live) {
-        this.live = live;
+    public void setAlive(boolean alive) {
+        this.alive = alive;
     }
 
     public void paint(Graphics g) {
-        if (!live) {
+        if (!alive) {
             tankFrame.bulletList.remove(this);
         }
         switch (dir) {
@@ -102,7 +102,21 @@ public class Bullet {
                 break;
         }
         if (x < 0 || y < 0 || x > TankFrame.GAME_WIDTH || y > TankFrame.GAME_HEIGHT) {
-            live = false;
+            alive = false;
         }
+    }
+
+    public void collideWith(Tank tank) {
+
+        Rectangle rect = new Rectangle(this.x,this.y,WIDTH,HEIGHT);
+        Rectangle rect2 = new Rectangle(tank.getX(),tank.getY(),Tank.WIDTH,Tank.HEIGHT);
+        if(rect.intersects(rect2)){
+            tank.die();
+            this.die();
+        }
+    }
+
+    private void die() {
+        this.alive = false;
     }
 }

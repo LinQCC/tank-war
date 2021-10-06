@@ -59,7 +59,8 @@ public class TankFrame extends Frame {
 
         Color color = g.getColor();
         g.setColor(Color.WHITE);
-        g.drawString("子弹数量:" + bulletList.size(), 100, 100);
+        g.drawString("子弹数量:" + bulletList.size(), 50, 100);
+        g.drawString("敌人数量:" + enemies.size(), 50, 130 );
         g.setColor(color);
         tank.paint(g);
 
@@ -77,6 +78,12 @@ public class TankFrame extends Frame {
 
         for (int i = 0; i < enemies.size(); i++) {
             enemies.get(i).paint(g);
+        }
+
+        for(Bullet bullet : bulletList){
+            for(Tank tank : enemies){
+                bullet.collideWith(tank);
+            }
         }
 
     }
