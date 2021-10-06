@@ -10,11 +10,13 @@ import java.io.IOException;
  */
 public class ResourceManager {
 
-    public static BufferedImage tankL,tankU,tankR,tankD;
+    public static BufferedImage tankL, tankU, tankR, tankD;
 
-    public static BufferedImage bulletL,bulletU,bulletR,bulletD;
+    public static BufferedImage bulletL, bulletU, bulletR, bulletD;
 
-    static{
+    public static BufferedImage[] explodes = new BufferedImage[16];
+
+    static {
         try {
             tankL = ImageIO.read(ResourceManager.class.getClassLoader().getResourceAsStream("image/tankL.gif"));
             tankU = ImageIO.read(ResourceManager.class.getClassLoader().getResourceAsStream("image/tankU.gif"));
@@ -25,6 +27,11 @@ public class ResourceManager {
             bulletU = ImageIO.read(ResourceManager.class.getClassLoader().getResourceAsStream("image/bulletU.gif"));
             bulletR = ImageIO.read(ResourceManager.class.getClassLoader().getResourceAsStream("image/bulletR.gif"));
             bulletD = ImageIO.read(ResourceManager.class.getClassLoader().getResourceAsStream("image/bulletD.gif"));
+
+            //加载爆炸图片
+            for (int i = 0; i < 16; i++) {
+                explodes[i] = ImageIO.read(ResourceManager.class.getClassLoader().getResourceAsStream("image/e"+(i+1)+".gif"));
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }

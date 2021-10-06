@@ -26,7 +26,7 @@ public class Tank {
 
     private TankFrame tankFrame;
 
-    private boolean moving = true;
+    private boolean moving = false;
 
     private boolean alive = true;
 
@@ -87,7 +87,7 @@ public class Tank {
 
         //随机开火
         if (this.group == Group.BAD) {
-            if (random.nextInt(10) > 8) {
+            if (random.nextInt(50) > 48) {
                 fire();
             }
         }
@@ -102,5 +102,6 @@ public class Tank {
 
     public void die() {
         this.alive = false;
+        tankFrame.explodes.add(new Explode(this.x, this.y, tankFrame));
     }
 }
