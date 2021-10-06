@@ -6,7 +6,6 @@ package com.lq.tank;
  */
 public enum DirectionEnum {
     
-    LEFT,UP,RIGHT,DOWN
-
+    LEFT,UP,RIGHT,DOWN;
 
 }

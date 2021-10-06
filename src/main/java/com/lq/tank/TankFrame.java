@@ -15,7 +15,7 @@ import java.util.List;
  * @date 2021/9/25
  */
 public class TankFrame extends Frame {
-
+    
     Tank tank = new Tank(500, 500, DirectionEnum.DOWN, Group.GOOD,this);
 
     List<Bullet> bulletList = new ArrayList<>();

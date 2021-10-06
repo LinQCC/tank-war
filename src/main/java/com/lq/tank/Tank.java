@@ -40,6 +40,9 @@ public class Tank {
         this.direction = direction;
         this.group = group;
         this.tankFrame = tankFrame;
+        if(this.group == Group.BAD){
+            moving = true;
+        }
     }
 
     public void paint(Graphics g) {
@@ -67,25 +70,54 @@ public class Tank {
     }
 
     private void move() {
+        int newX;
+        int newY;
         if (moving) {
             switch (direction) {
                 case LEFT:
-                    x -= SPEED;
+                    newX = x - SPEED;
+                    if (newX > 0) {
+                        x = newX;
+                    } else {
+                        x = 0;
+                    }
                     break;
                 case UP:
-                    y -= SPEED;
+                    newY = y - SPEED;
+                    if (newY > 20) {
+                        y = newY;
+                    } else {
+                        y = 20;
+                    }
                     break;
                 case RIGHT:
-                    x += SPEED;
+                    newX = x + SPEED;
+                    if (newX < (TankFrame.GAME_WIDTH - WIDTH)) {
+                        x = newX;
+                    } else {
+                        x = (TankFrame.GAME_WIDTH - WIDTH);
+                    }
                     break;
                 case DOWN:
-                    y += SPEED;
+                    newY = y + SPEED;
+                    if (newY < (TankFrame.GAME_HEIGHT - HEIGHT)) {
+                        y = newY;
+                    } else {
+                        y = (TankFrame.GAME_HEIGHT - HEIGHT);
+                    }
                     break;
                 default:
             }
         }
 
-        //随机开火
+        //敌方坦克随机转向
+        if (this.group == Group.BAD) {
+            if(random.nextInt(40) > 38){
+                this.direction = DirectionEnum.values()[random.nextInt(DirectionEnum.values().length)];
+            }
+        }
+
+        //敌方坦克随机开火
         if (this.group == Group.BAD) {
             if (random.nextInt(50) > 48) {
                 fire();
