@@ -1,11 +1,15 @@
 package com.lq.tank;
 
+import lombok.Data;
+
 import java.awt.*;
+import java.util.Random;
 
 /**
  * @author babei
  * @date 2021/9/26
  */
+@Data
 public class Tank {
 
     private static final int SPEED = 5;
@@ -22,52 +26,25 @@ public class Tank {
 
     private TankFrame tankFrame;
 
-    private boolean moving = false;
+    private boolean moving = true;
 
     private boolean alive = true;
 
-    public Tank(int x, int y, DirectionEnum direction, TankFrame tankFrame) {
+    private Random random = new Random();
+
+    private Group group = Group.BAD;
+
+    public Tank(int x, int y, DirectionEnum direction, Group group, TankFrame tankFrame) {
         this.x = x;
         this.y = y;
         this.direction = direction;
+        this.group = group;
         this.tankFrame = tankFrame;
-    }
-
-    public int getX() {
-        return x;
-    }
-
-    public void setX(int x) {
-        this.x = x;
-    }
-
-    public int getY() {
-        return y;
-    }
-
-    public void setY(int y) {
-        this.y = y;
-    }
-
-    public DirectionEnum getDirection() {
-        return direction;
-    }
-
-    public void setDirection(DirectionEnum direction) {
-        this.direction = direction;
-    }
-
-    public boolean isMoving() {
-        return moving;
-    }
-
-    public void setMoving(boolean moving) {
-        this.moving = moving;
     }
 
     public void paint(Graphics g) {
 
-        if(!alive){
+        if (!alive) {
             tankFrame.enemies.remove(this);
         }
 
@@ -108,12 +85,19 @@ public class Tank {
             }
         }
 
+        //随机开火
+        if (this.group == Group.BAD) {
+            if (random.nextInt(10) > 8) {
+                fire();
+            }
+        }
+
     }
 
     public void fire() {
         int bx = x + WIDTH / 2 - Bullet.WIDTH / 2;
         int by = y + HEIGHT / 2 - Bullet.HEIGHT / 2;
-        tankFrame.bulletList.add(new Bullet(bx, by, direction, tankFrame));
+        tankFrame.bulletList.add(new Bullet(bx, by, direction, this.group, tankFrame));
     }
 
     public void die() {

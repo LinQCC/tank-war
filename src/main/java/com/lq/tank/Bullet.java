@@ -1,11 +1,14 @@
 package com.lq.tank;
 
+import lombok.Data;
+
 import java.awt.*;
 
 /**
  * @author babei
  * @date 2021/9/26
  */
+@Data
 public class Bullet {
 
     private static final int SPEED = 10;
@@ -24,43 +27,14 @@ public class Bullet {
 
     private TankFrame tankFrame;
 
-    public Bullet(int x, int y, DirectionEnum dir, TankFrame tankFrame) {
+    private Group group = Group.BAD;
+
+    public Bullet(int x, int y, DirectionEnum dir, Group group, TankFrame tankFrame) {
         this.x = x;
         this.y = y;
         this.dir = dir;
+        this.group = group;
         this.tankFrame = tankFrame;
-    }
-
-    public int getX() {
-        return x;
-    }
-
-    public void setX(int x) {
-        this.x = x;
-    }
-
-    public int getY() {
-        return y;
-    }
-
-    public void setY(int y) {
-        this.y = y;
-    }
-
-    public DirectionEnum getDir() {
-        return dir;
-    }
-
-    public void setDir(DirectionEnum dir) {
-        this.dir = dir;
-    }
-
-    public boolean isAlive() {
-        return alive;
-    }
-
-    public void setAlive(boolean alive) {
-        this.alive = alive;
     }
 
     public void paint(Graphics g) {
@@ -108,9 +82,13 @@ public class Bullet {
 
     public void collideWith(Tank tank) {
 
-        Rectangle rect = new Rectangle(this.x,this.y,WIDTH,HEIGHT);
-        Rectangle rect2 = new Rectangle(tank.getX(),tank.getY(),Tank.WIDTH,Tank.HEIGHT);
-        if(rect.intersects(rect2)){
+        if(this.group == tank.getGroup()){
+            return;
+        }
+        // TODO: 2021/10/6 用一个Rectangle来记录子弹的位置，这样可以减少创建对象的数量
+        Rectangle rect = new Rectangle(this.x, this.y, WIDTH, HEIGHT);
+        Rectangle rect2 = new Rectangle(tank.getX(), tank.getY(), Tank.WIDTH, Tank.HEIGHT);
+        if (rect.intersects(rect2)) {
             tank.die();
             this.die();
         }
