@@ -27,6 +27,9 @@ public class Explode {
         this.x = x;
         this.y = y;
         this.tankFrame = tankFrame;
+
+        // 播放爆炸音效
+        new Thread(()->new Audio("audio/explode.wav").play()).start();
     }
 
     public void paint(Graphics g) {

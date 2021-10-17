@@ -95,7 +95,6 @@ public class TankFrame extends Frame {
             for(Tank tank : enemies){
                 bullet.collideWith(tank);
             }
-            bullet.collideWith(tank);
         }
 
         //绘制爆炸

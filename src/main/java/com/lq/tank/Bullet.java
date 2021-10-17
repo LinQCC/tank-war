@@ -17,7 +17,7 @@ public class Bullet {
 
     public static final int HEIGHT = ResourceManager.bulletD.getHeight();
 
-    private Rectangle rect = new Rectangle();
+    private Rectangle rect = new Rectangle(WIDTH,HEIGHT);
 
     private int x;
 
@@ -45,6 +45,13 @@ public class Bullet {
         if (!alive) {
             tankFrame.bulletList.remove(this);
         }
+
+        drawBullet(g);
+
+        move();
+    }
+
+    private void drawBullet(Graphics g) {
         switch (dir) {
             case LEFT:
                 g.drawImage(ResourceManager.bulletL, x, y, null);
@@ -60,7 +67,6 @@ public class Bullet {
                 break;
             default:
         }
-        move();
     }
 
     private void move() {
@@ -80,18 +86,23 @@ public class Bullet {
                 break;
         }
 
-        if (x < 0 || y < 0 || x > TankFrame.GAME_WIDTH || y > TankFrame.GAME_HEIGHT) {
-            alive = false;
-        }
+        boundCheck();
 
         // 更新碰撞矩形的位置
-        rect.x = x;
-        rect.y = y;
+        rect.x = this.x;
+        rect.y = this.y;
 
     }
 
+    private void boundCheck() {
+        if (x < 0 || y < 0 || x > TankFrame.GAME_WIDTH || y > TankFrame.GAME_HEIGHT) {
+            alive = false;
+        }
+    }
+
     public void collideWith(Tank tank) {
-        if(this.group == tank.getGroup()){
+
+        if (this.group == tank.getGroup()) {
             return;
         }
 

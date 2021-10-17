@@ -22,7 +22,7 @@ public class Tank {
 
     private int y;
 
-    private Rectangle rect = new Rectangle();
+    private Rectangle rect = new Rectangle(WIDTH,HEIGHT);
 
     private DirectionEnum direction;
 
@@ -109,8 +109,8 @@ public class Tank {
         boundCheck();
 
         // 更新碰撞矩形的位置
-        rect.x = x;
-        rect.y = y;
+        rect.x = this.x;
+        rect.y = this.y;
     }
 
     private void boundCheck() {
@@ -149,6 +149,9 @@ public class Tank {
         int bx = x + WIDTH / 2 - Bullet.WIDTH / 2;
         int by = y + HEIGHT / 2 - Bullet.HEIGHT / 2;
         tankFrame.bulletList.add(new Bullet(bx, by, direction, this.group, tankFrame));
+
+        // 播放开火音效
+        if(this.group == Group.GOOD) new Thread(()->new Audio("audio/tank_fire.wav").play()).start();
     }
 
     public void die() {

@@ -6,7 +6,7 @@ package com.lq.tank;
  */
 public class TankGame {
 
-    public static void main(String[] args) throws InterruptedException {
+    public static void main(String[] args) {
 
         TankFrame tankFrame = new TankFrame();
 
@@ -15,9 +15,23 @@ public class TankGame {
             tankFrame.enemies.add(new Tank(50+i*50,200,DirectionEnum.DOWN,Group.BAD,tankFrame));
         }
 
-        while (true) {
-            Thread.sleep(50);
-            tankFrame.repaint();
-        }
+        // 循环播放背景音乐
+        new Thread(()->{
+            new Audio("audio/war1.wav").loop();
+        }).start();
+
+        // 每隔一段时间重绘
+        new Thread(()->{
+            while (true) {
+                try {
+                    Thread.sleep(50);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                tankFrame.repaint();
+            }
+        }).start();
+
+
     }
 }
