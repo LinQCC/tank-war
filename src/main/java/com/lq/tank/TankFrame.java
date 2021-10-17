@@ -24,8 +24,8 @@ public class TankFrame extends Frame {
 
     List<Explode> explodes = new ArrayList<>();
 
-    public static final int GAME_WIDTH = 800;
-    public static final int GAME_HEIGHT = 600;
+    public static final int GAME_WIDTH = 1080;
+    public static final int GAME_HEIGHT = 960;
 
     public TankFrame() throws HeadlessException {
         setSize(GAME_WIDTH, GAME_HEIGHT);

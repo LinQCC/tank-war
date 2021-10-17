@@ -115,6 +115,11 @@ public class Tank {
             }
         }
 
+        randomDirAndFire();
+
+    }
+
+    private void randomDirAndFire() {
         //敌方坦克随机转向
         if (this.group == Group.BAD) {
             if (random.nextInt(40) > 38) {
@@ -128,8 +133,8 @@ public class Tank {
                 fire();
             }
         }
-
     }
+
 
     public void fire() {
         int bx = x + WIDTH / 2 - Bullet.WIDTH / 2;
@@ -139,6 +144,6 @@ public class Tank {
 
     public void die() {
         this.alive = false;
-        tankFrame.explodes.add(new Explode(this.x, this.y, tankFrame));
+        tankFrame.explodes.add(new Explode(this.x + Tank.WIDTH / 2 - Explode.WIDTH / 2, this.y + Tank.HEIGHT / 2 - Explode.HEIGHT / 2, tankFrame));
     }
 }
