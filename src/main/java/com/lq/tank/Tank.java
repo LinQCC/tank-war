@@ -12,7 +12,7 @@ import java.util.Random;
 @Data
 public class Tank {
 
-    private static final int SPEED = 5;
+    private static final int SPEED = 10;
 
     public static final int WIDTH = ResourceManager.goodTankU.getWidth();
 
@@ -56,68 +56,68 @@ public class Tank {
             }
         }
 
+        drawTank(g);
+
+        move();
+
+        randomDirAndFire();
+    }
+
+    private void drawTank(Graphics g) {
 
         switch (direction) {
             case LEFT:
-                g.drawImage(this.group == Group.GOOD?ResourceManager.goodTankL:ResourceManager.badTankL, x, y, null);
+                g.drawImage(this.group == Group.GOOD ? ResourceManager.goodTankL : ResourceManager.badTankL, x, y, null);
                 break;
             case UP:
-                g.drawImage(this.group == Group.GOOD?ResourceManager.goodTankU:ResourceManager.badTankU, x, y, null);
+                g.drawImage(this.group == Group.GOOD ? ResourceManager.goodTankU : ResourceManager.badTankU, x, y, null);
                 break;
             case RIGHT:
-                g.drawImage(this.group == Group.GOOD?ResourceManager.goodTankR:ResourceManager.badTankR, x, y, null);
+                g.drawImage(this.group == Group.GOOD ? ResourceManager.goodTankR : ResourceManager.badTankR, x, y, null);
                 break;
             case DOWN:
-                g.drawImage(this.group == Group.GOOD?ResourceManager.goodTankD:ResourceManager.badTankD, x, y, null);
+                g.drawImage(this.group == Group.GOOD ? ResourceManager.goodTankD : ResourceManager.badTankD, x, y, null);
                 break;
             default:
         }
-        move();
     }
 
     private void move() {
-        int newX;
-        int newY;
         if (moving) {
             switch (direction) {
                 case LEFT:
-                    newX = x - SPEED;
-                    if (newX > 0) {
-                        x = newX;
-                    } else {
-                        x = 0;
-                    }
+                    x -= SPEED;
                     break;
                 case UP:
-                    newY = y - SPEED;
-                    if (newY > 20) {
-                        y = newY;
-                    } else {
-                        y = 20;
-                    }
+                    y -= SPEED;
                     break;
                 case RIGHT:
-                    newX = x + SPEED;
-                    if (newX < (TankFrame.GAME_WIDTH - WIDTH)) {
-                        x = newX;
-                    } else {
-                        x = (TankFrame.GAME_WIDTH - WIDTH);
-                    }
+                    x += SPEED;
                     break;
                 case DOWN:
-                    newY = y + SPEED;
-                    if (newY < (TankFrame.GAME_HEIGHT - HEIGHT)) {
-                        y = newY;
-                    } else {
-                        y = (TankFrame.GAME_HEIGHT - HEIGHT);
-                    }
+                    y += SPEED;
                     break;
                 default:
             }
         }
 
-        randomDirAndFire();
+        // 边界检测
+        boundCheck();
+    }
 
+    private void boundCheck() {
+        if (this.x < 0) {
+            this.x = 0;
+        }
+        if (this.x > TankFrame.GAME_WIDTH - Tank.WIDTH - 2) {
+            this.x = TankFrame.GAME_WIDTH - Tank.WIDTH - 2;
+        }
+        if (this.y < 30) {
+            this.y = 30;
+        }
+        if (this.y > TankFrame.GAME_HEIGHT - Tank.HEIGHT - 2) {
+            this.y = TankFrame.GAME_HEIGHT - Tank.HEIGHT - 2;
+        }
     }
 
     private void randomDirAndFire() {

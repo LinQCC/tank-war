@@ -11,7 +11,7 @@ import java.awt.*;
 @Data
 public class Bullet {
 
-    private static final int SPEED = 10;
+    private static final int SPEED = 30;
 
     public static final int WIDTH = ResourceManager.bulletU.getWidth();
 
