@@ -1,5 +1,6 @@
 package com.lq.tank;
 
+
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -18,15 +19,15 @@ public class ResourceManager {
 
     static {
         try {
-            tankL = ImageIO.read(ResourceManager.class.getClassLoader().getResourceAsStream("image/tankL.gif"));
-            tankU = ImageIO.read(ResourceManager.class.getClassLoader().getResourceAsStream("image/tankU.gif"));
-            tankR = ImageIO.read(ResourceManager.class.getClassLoader().getResourceAsStream("image/tankR.gif"));
-            tankD = ImageIO.read(ResourceManager.class.getClassLoader().getResourceAsStream("image/tankD.gif"));
+            tankU = ImageIO.read(ResourceManager.class.getClassLoader().getResourceAsStream("image/BadTank1.png"));
+            tankL = ImageUtil.rotateImage(tankU,-90);
+            tankR = ImageUtil.rotateImage(tankU,90);
+            tankD = ImageUtil.rotateImage(tankU,180);
 
-            bulletL = ImageIO.read(ResourceManager.class.getClassLoader().getResourceAsStream("image/bulletL.gif"));
-            bulletU = ImageIO.read(ResourceManager.class.getClassLoader().getResourceAsStream("image/bulletU.gif"));
-            bulletR = ImageIO.read(ResourceManager.class.getClassLoader().getResourceAsStream("image/bulletR.gif"));
-            bulletD = ImageIO.read(ResourceManager.class.getClassLoader().getResourceAsStream("image/bulletD.gif"));
+            bulletU = ImageIO.read(ResourceManager.class.getClassLoader().getResourceAsStream("image/bulletU.png"));
+            bulletL = ImageUtil.rotateImage(bulletU,-90);
+            bulletR = ImageUtil.rotateImage(bulletU,90);
+            bulletD = ImageUtil.rotateImage(bulletU,180);
 
             //加载爆炸图片
             for (int i = 0; i < 16; i++) {
