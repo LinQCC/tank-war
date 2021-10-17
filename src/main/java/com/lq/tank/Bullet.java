@@ -17,6 +17,8 @@ public class Bullet {
 
     public static final int HEIGHT = ResourceManager.bulletD.getHeight();
 
+    private Rectangle rect = new Rectangle();
+
     private int x;
 
     private int y;
@@ -35,6 +37,8 @@ public class Bullet {
         this.dir = dir;
         this.group = group;
         this.tankFrame = tankFrame;
+        rect.x = x;
+        rect.y = y;
     }
 
     public void paint(Graphics g) {
@@ -75,19 +79,23 @@ public class Bullet {
                 y += SPEED;
                 break;
         }
+
         if (x < 0 || y < 0 || x > TankFrame.GAME_WIDTH || y > TankFrame.GAME_HEIGHT) {
             alive = false;
         }
+
+        // 更新碰撞矩形的位置
+        rect.x = x;
+        rect.y = y;
+
     }
 
     public void collideWith(Tank tank) {
         if(this.group == tank.getGroup()){
             return;
         }
-        // TODO: 2021/10/6 用一个Rectangle来记录子弹的位置，这样可以减少创建对象的数量
-        Rectangle rect = new Rectangle(this.x, this.y, WIDTH, HEIGHT);
-        Rectangle rect2 = new Rectangle(tank.getX(), tank.getY(), Tank.WIDTH, Tank.HEIGHT);
-        if (rect.intersects(rect2)) {
+
+        if (this.rect.intersects(tank.getRect())) {
             tank.die();
             this.die();
         }

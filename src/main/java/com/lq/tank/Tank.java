@@ -22,6 +22,8 @@ public class Tank {
 
     private int y;
 
+    private Rectangle rect = new Rectangle();
+
     private DirectionEnum direction;
 
     private TankFrame tankFrame;
@@ -43,6 +45,8 @@ public class Tank {
         if (this.group == Group.BAD) {
             moving = true;
         }
+        rect.x = x;
+        rect.y = y;
     }
 
     public void paint(Graphics g) {
@@ -103,6 +107,10 @@ public class Tank {
 
         // 边界检测
         boundCheck();
+
+        // 更新碰撞矩形的位置
+        rect.x = x;
+        rect.y = y;
     }
 
     private void boundCheck() {
