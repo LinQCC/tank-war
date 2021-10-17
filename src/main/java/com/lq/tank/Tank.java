@@ -12,7 +12,7 @@ import java.util.Random;
 @Data
 public class Tank {
 
-    private static final int SPEED = 10;
+    private static final int SPEED = PropertyManager.getInt("tankSpeed");
 
     public static final int WIDTH = ResourceManager.goodTankU.getWidth();
 

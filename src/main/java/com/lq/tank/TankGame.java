@@ -10,8 +10,10 @@ public class TankGame {
 
         TankFrame tankFrame = new TankFrame();
 
+        int initTankCount = PropertyManager.getInt("initTankCount");
+
         //初始化敌方坦克
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < initTankCount; i++) {
             tankFrame.enemies.add(new Tank(50+i*50,200,DirectionEnum.DOWN,Group.BAD,tankFrame));
         }
 
