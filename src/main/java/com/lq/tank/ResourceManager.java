@@ -11,6 +11,19 @@ import java.io.IOException;
  */
 public class ResourceManager {
 
+    private ResourceManager(){
+
+    }
+
+    // 采用静态内部类的单例写法
+    private static class ResourceManagerHolder{
+        public static ResourceManager INSTANCE = new ResourceManager();
+    }
+
+    public static ResourceManager getInstance(){
+        return ResourceManagerHolder.INSTANCE;
+    }
+
     public static BufferedImage goodTankL, goodTankU, goodTankR, goodTankD;
 
     public static BufferedImage badTankL, badTankU, badTankR, badTankD;
