@@ -34,7 +34,9 @@ public class Tank {
 
     private Random random = new Random();
 
-    private Group group = Group.BAD;
+    private Group group;
+
+    private FireStrategy fireStrategy = new DefaultFireStrategy();
 
     public Tank(int x, int y, DirectionEnum direction, Group group, TankFrame tankFrame) {
         this.x = x;
@@ -47,6 +49,10 @@ public class Tank {
         }
         rect.x = x;
         rect.y = y;
+
+        if(group == Group.GOOD){
+            fireStrategy = new FourDirFireStrategy();
+        }
     }
 
     public void paint(Graphics g) {
@@ -145,13 +151,9 @@ public class Tank {
     }
 
 
-    public void fire() {
-        int bx = x + WIDTH / 2 - Bullet.WIDTH / 2;
-        int by = y + HEIGHT / 2 - Bullet.HEIGHT / 2;
-        tankFrame.bulletList.add(new Bullet(bx, by, direction, this.group, tankFrame));
 
-        // 播放开火音效
-        if(this.group == Group.GOOD) new Thread(()->new Audio("audio/tank_fire.wav").play()).start();
+    public void fire() {
+        fireStrategy.fire(this);
     }
 
     public void die() {

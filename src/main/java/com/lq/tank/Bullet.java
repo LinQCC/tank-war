@@ -39,6 +39,8 @@ public class Bullet {
         this.tankFrame = tankFrame;
         rect.x = x;
         rect.y = y;
+
+        tankFrame.bulletList.add(this);
     }
 
     public void paint(Graphics g) {
