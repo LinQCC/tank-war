@@ -1,4 +1,6 @@
-package com.lq.tank;
+package com.lq.tank.strategy;
+
+import com.lq.tank.abstractfactory.BaseTank;
 
 /**
  *  坦克开火策略
@@ -8,5 +10,5 @@ package com.lq.tank;
  */
 public interface FireStrategy {
 
-    void fire(Tank tank);
+    void fire(BaseTank tank);
 }

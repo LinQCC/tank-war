@@ -1,4 +1,4 @@
-package com.lq.tank;
+package com.lq.tank.manager;
 
 import java.io.IOException;
 import java.util.Properties;

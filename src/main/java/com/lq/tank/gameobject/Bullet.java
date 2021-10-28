@@ -1,5 +1,12 @@
-package com.lq.tank;
+package com.lq.tank.gameobject;
 
+import com.lq.tank.TankFrame;
+import com.lq.tank.abstractfactory.BaseBullet;
+import com.lq.tank.abstractfactory.BaseTank;
+import com.lq.tank.enums.DirectionEnum;
+import com.lq.tank.enums.Group;
+import com.lq.tank.manager.PropertyManager;
+import com.lq.tank.manager.ResourceManager;
 import lombok.Data;
 
 import java.awt.*;
@@ -9,7 +16,7 @@ import java.awt.*;
  * @date 2021/9/26
  */
 @Data
-public class Bullet {
+public class Bullet extends BaseBullet {
 
     private static final int SPEED = PropertyManager.getInt("bulletSpeed");;
 
@@ -17,19 +24,9 @@ public class Bullet {
 
     public static final int HEIGHT = ResourceManager.bulletD.getHeight();
 
-    private Rectangle rect = new Rectangle(WIDTH,HEIGHT);
-
-    private int x;
-
-    private int y;
-
-    private DirectionEnum dir;
-
-    private boolean alive = true;
+    protected Rectangle rect = new Rectangle(WIDTH,HEIGHT);
 
     private TankFrame tankFrame;
-
-    private Group group = Group.BAD;
 
     public Bullet(int x, int y, DirectionEnum dir, Group group, TankFrame tankFrame) {
         this.x = x;
@@ -43,6 +40,7 @@ public class Bullet {
         tankFrame.bulletList.add(this);
     }
 
+    @Override
     public void paint(Graphics g) {
         if (!alive) {
             tankFrame.bulletList.remove(this);
@@ -102,7 +100,13 @@ public class Bullet {
         }
     }
 
-    public void collideWith(Tank tank) {
+    /**
+     * 子弹与坦克的碰撞检测
+     *
+     * @param tank  坦克
+     */
+    @Override
+    public void collideWith(BaseTank tank){
 
         if (this.group == tank.getGroup()) {
             return;
@@ -112,9 +116,5 @@ public class Bullet {
             tank.die();
             this.die();
         }
-    }
-
-    private void die() {
-        this.alive = false;
     }
 }

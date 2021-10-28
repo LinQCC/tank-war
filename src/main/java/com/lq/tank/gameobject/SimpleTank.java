@@ -1,5 +1,14 @@
-package com.lq.tank;
+package com.lq.tank.gameobject;
 
+import com.lq.tank.TankFrame;
+import com.lq.tank.abstractfactory.BaseTank;
+import com.lq.tank.enums.DirectionEnum;
+import com.lq.tank.enums.Group;
+import com.lq.tank.manager.PropertyManager;
+import com.lq.tank.manager.ResourceManager;
+import com.lq.tank.strategy.DefaultFireStrategy;
+import com.lq.tank.strategy.FireStrategy;
+import com.lq.tank.strategy.FourDirFireStrategy;
 import lombok.Data;
 
 import java.awt.*;
@@ -10,35 +19,23 @@ import java.util.Random;
  * @date 2021/9/26
  */
 @Data
-public class Tank {
+public class SimpleTank extends BaseTank {
+
+    public static final int WIDTH = ResourceManager.badTankU.getWidth();
+
+    public static final int HEIGHT = ResourceManager.badTankU.getHeight();
 
     private static final int SPEED = PropertyManager.getInt("tankSpeed");
 
-    public static final int WIDTH = ResourceManager.goodTankU.getWidth();
-
-    public static final int HEIGHT = ResourceManager.goodTankU.getHeight();
-
-    private int x;
-
-    private int y;
-
-    private Rectangle rect = new Rectangle(WIDTH,HEIGHT);
-
-    private DirectionEnum direction;
-
-    private TankFrame tankFrame;
+    protected Rectangle rect = new Rectangle(WIDTH,HEIGHT);
 
     private boolean moving = false;
 
-    private boolean alive = true;
-
     private Random random = new Random();
-
-    private Group group;
 
     private FireStrategy fireStrategy = new DefaultFireStrategy();
 
-    public Tank(int x, int y, DirectionEnum direction, Group group, TankFrame tankFrame) {
+    public SimpleTank(int x, int y, DirectionEnum direction, Group group, TankFrame tankFrame) {
         this.x = x;
         this.y = y;
         this.direction = direction;
@@ -55,6 +52,7 @@ public class Tank {
         }
     }
 
+    @Override
     public void paint(Graphics g) {
 
         if (!alive) {
@@ -123,14 +121,14 @@ public class Tank {
         if (this.x < 0) {
             this.x = 0;
         }
-        if (this.x > TankFrame.GAME_WIDTH - Tank.WIDTH - 2) {
-            this.x = TankFrame.GAME_WIDTH - Tank.WIDTH - 2;
+        if (this.x > TankFrame.GAME_WIDTH - SimpleTank.WIDTH - 2) {
+            this.x = TankFrame.GAME_WIDTH - SimpleTank.WIDTH - 2;
         }
         if (this.y < 30) {
             this.y = 30;
         }
-        if (this.y > TankFrame.GAME_HEIGHT - Tank.HEIGHT - 2) {
-            this.y = TankFrame.GAME_HEIGHT - Tank.HEIGHT - 2;
+        if (this.y > TankFrame.GAME_HEIGHT - SimpleTank.HEIGHT - 2) {
+            this.y = TankFrame.GAME_HEIGHT - SimpleTank.HEIGHT - 2;
         }
     }
 
@@ -150,14 +148,14 @@ public class Tank {
         }
     }
 
-
-
     public void fire() {
+
         fireStrategy.fire(this);
     }
 
+    @Override
     public void die() {
         this.alive = false;
-        tankFrame.explodes.add(new Explode(this.x + Tank.WIDTH / 2 - Explode.WIDTH / 2, this.y + Tank.HEIGHT / 2 - Explode.HEIGHT / 2, tankFrame));
+        tankFrame.explodes.add(tankFrame.gameFactory.createExplode(this.x + SimpleTank.WIDTH / 2 - Explode.WIDTH / 2, this.y + SimpleTank.HEIGHT / 2 - Explode.HEIGHT / 2, tankFrame));
     }
 }

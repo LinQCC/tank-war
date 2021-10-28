@@ -1,4 +1,4 @@
-package com.lq.tank;
+package com.lq.tank.audio;
 
 import javax.sound.sampled.*;
 import java.io.IOException;

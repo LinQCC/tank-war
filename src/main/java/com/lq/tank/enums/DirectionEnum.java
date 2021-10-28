@@ -1,4 +1,4 @@
-package com.lq.tank;
+package com.lq.tank.enums;
 
 /**
  * @author babei

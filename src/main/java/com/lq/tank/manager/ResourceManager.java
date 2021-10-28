@@ -1,5 +1,7 @@
-package com.lq.tank;
+package com.lq.tank.manager;
 
+
+import com.lq.tank.util.ImageUtil;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;

@@ -1,6 +1,12 @@
 package com.lq.tank;
 
 
+import com.lq.tank.abstractfactory.*;
+import com.lq.tank.enums.DirectionEnum;
+import com.lq.tank.enums.Group;
+import com.lq.tank.gameobject.Tank;
+import com.lq.tank.manager.PropertyManager;
+
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -18,15 +24,26 @@ public class TankFrame extends Frame {
 
     public Tank tank = new Tank(500, 500, DirectionEnum.DOWN, Group.GOOD,this);
 
-    List<Bullet> bulletList = new ArrayList<>();
+    int initTankCount = PropertyManager.getInt("initTankCount");
 
-    List<Tank> enemies = new ArrayList<>();
+    public List<BaseBullet> bulletList = new ArrayList<>();
 
-    List<Explode> explodes = new ArrayList<>();
+    public List<BaseTank> enemies = new ArrayList<>();
+
+    public List<BaseExplode> explodes = new ArrayList<>();
+
+    public TankFactory gameFactory = new DefaultFactory();
 
     public static final int GAME_WIDTH = PropertyManager.getInt("gameWidth");
 
     public static final int GAME_HEIGHT = PropertyManager.getInt("gameHeight");;
+
+    {
+        //初始化敌方坦克
+        for (int i = 0; i < initTankCount; i++) {
+            enemies.add(gameFactory.createTank(50+i*50,200, DirectionEnum.DOWN,Group.BAD,this));
+        }
+    }
 
     public TankFrame() throws HeadlessException {
         setSize(GAME_WIDTH, GAME_HEIGHT);
@@ -92,8 +109,8 @@ public class TankFrame extends Frame {
         }
 
         //子弹坦克碰撞检测
-        for(Bullet bullet : bulletList){
-            for(Tank tank : enemies){
+        for(BaseBullet bullet : bulletList){
+            for(BaseTank tank : enemies){
                 bullet.collideWith(tank);
             }
         }

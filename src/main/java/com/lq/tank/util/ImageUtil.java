@@ -1,4 +1,4 @@
-package com.lq.tank;
+package com.lq.tank.util;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;

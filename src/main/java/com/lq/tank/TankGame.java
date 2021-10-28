@@ -1,5 +1,7 @@
 package com.lq.tank;
 
+import com.lq.tank.audio.Audio;
+
 /**
  * @author babei
  * @date 2021/9/25
@@ -9,13 +11,6 @@ public class TankGame {
     public static void main(String[] args) {
 
         TankFrame tankFrame = new TankFrame();
-
-        int initTankCount = PropertyManager.getInt("initTankCount");
-
-        //初始化敌方坦克
-        for (int i = 0; i < initTankCount; i++) {
-            tankFrame.enemies.add(new Tank(50+i*50,200,DirectionEnum.DOWN,Group.BAD,tankFrame));
-        }
 
         // 循环播放背景音乐
         new Thread(()->{
