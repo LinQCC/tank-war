@@ -4,6 +4,7 @@ import com.lq.tank.TankFrame;
 import com.lq.tank.abstractfactory.BaseTank;
 import com.lq.tank.enums.DirectionEnum;
 import com.lq.tank.enums.Group;
+import com.lq.tank.facade.GameModel;
 import com.lq.tank.manager.PropertyManager;
 import com.lq.tank.manager.ResourceManager;
 import com.lq.tank.strategy.DefaultFireStrategy;
@@ -35,12 +36,12 @@ public class SimpleTank extends BaseTank {
 
     private FireStrategy fireStrategy = new DefaultFireStrategy();
 
-    public SimpleTank(int x, int y, DirectionEnum direction, Group group, TankFrame tankFrame) {
+    public SimpleTank(int x, int y, DirectionEnum direction, Group group, GameModel gameModel) {
         this.x = x;
         this.y = y;
         this.direction = direction;
         this.group = group;
-        this.tankFrame = tankFrame;
+        this.gameModel = gameModel;
         if (this.group == Group.BAD) {
             moving = true;
         }
@@ -57,10 +58,10 @@ public class SimpleTank extends BaseTank {
 
         if (!alive) {
             if (this.group == Group.GOOD) {
-                tankFrame.tank.setX(1000);
-                tankFrame.tank.setY(1000);
+                gameModel.tank.setX(1000);
+                gameModel.tank.setY(1000);
             } else {
-                tankFrame.enemies.remove(this);
+                gameModel.enemies.remove(this);
             }
         }
 
@@ -156,6 +157,6 @@ public class SimpleTank extends BaseTank {
     @Override
     public void die() {
         this.alive = false;
-        tankFrame.explodes.add(tankFrame.gameFactory.createExplode(this.x + SimpleTank.WIDTH / 2 - Explode.WIDTH / 2, this.y + SimpleTank.HEIGHT / 2 - Explode.HEIGHT / 2, tankFrame));
+        gameModel.explodes.add(gameModel.gameFactory.createExplode(this.x + SimpleTank.WIDTH / 2 - Explode.WIDTH / 2, this.y + SimpleTank.HEIGHT / 2 - Explode.HEIGHT / 2, gameModel));
     }
 }

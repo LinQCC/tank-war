@@ -1,9 +1,10 @@
 package com.lq.tank.gameobject;
 
-import com.lq.tank.*;
+import com.lq.tank.TankFrame;
 import com.lq.tank.abstractfactory.BaseTank;
 import com.lq.tank.enums.DirectionEnum;
 import com.lq.tank.enums.Group;
+import com.lq.tank.facade.GameModel;
 import com.lq.tank.manager.PropertyManager;
 import com.lq.tank.manager.ResourceManager;
 import com.lq.tank.strategy.DefaultFireStrategy;
@@ -35,12 +36,14 @@ public class Tank extends BaseTank {
 
     private FireStrategy fireStrategy = new DefaultFireStrategy();
 
-    public Tank(int x, int y, DirectionEnum direction, Group group, TankFrame tankFrame) {
+    private GameModel gameModel;
+
+    public Tank(int x, int y, DirectionEnum direction, Group group, GameModel gameModel) {
         this.x = x;
         this.y = y;
         this.direction = direction;
         this.group = group;
-        this.tankFrame = tankFrame;
+        this.gameModel = gameModel;
         if (this.group == Group.BAD) {
             moving = true;
         }
@@ -57,10 +60,10 @@ public class Tank extends BaseTank {
 
         if (!alive) {
             if (this.group == Group.GOOD) {
-                tankFrame.tank.setX(1000);
-                tankFrame.tank.setY(1000);
+                gameModel.tank.setX(1000);
+                gameModel.tank.setY(1000);
             } else {
-                tankFrame.enemies.remove(this);
+                gameModel.enemies.remove(this);
             }
         }
 
@@ -156,6 +159,6 @@ public class Tank extends BaseTank {
     @Override
     public void die() {
         this.alive = false;
-        tankFrame.explodes.add(tankFrame.gameFactory.createExplode(this.x + Tank.WIDTH / 2 - Explode.WIDTH / 2, this.y + Tank.HEIGHT / 2 - Explode.HEIGHT / 2, tankFrame));
+        gameModel.explodes.add(gameModel.gameFactory.createExplode(this.x + Tank.WIDTH / 2 - Explode.WIDTH / 2, this.y + Tank.HEIGHT / 2 - Explode.HEIGHT / 2, gameModel));
     }
 }

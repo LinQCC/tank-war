@@ -1,8 +1,8 @@
 package com.lq.tank.abstractfactory;
 
-import com.lq.tank.TankFrame;
 import com.lq.tank.enums.DirectionEnum;
 import com.lq.tank.enums.Group;
+import com.lq.tank.facade.GameModel;
 import lombok.Data;
 
 import java.awt.*;
@@ -26,7 +26,7 @@ public abstract class BaseTank {
 
     protected Group group;
 
-    protected TankFrame tankFrame;
+    protected GameModel gameModel;
 
     protected Rectangle rect;
 

@@ -1,9 +1,8 @@
 package com.lq.tank;
 
 
-import com.lq.tank.abstractfactory.*;
 import com.lq.tank.enums.DirectionEnum;
-import com.lq.tank.enums.Group;
+import com.lq.tank.facade.GameModel;
 import com.lq.tank.gameobject.Tank;
 import com.lq.tank.manager.PropertyManager;
 
@@ -12,8 +11,6 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.util.ArrayList;
-import java.util.List;
 
 
 /**
@@ -22,28 +19,15 @@ import java.util.List;
  */
 public class TankFrame extends Frame {
 
-    public Tank tank = new Tank(500, 500, DirectionEnum.DOWN, Group.GOOD,this);
 
-    int initTankCount = PropertyManager.getInt("initTankCount");
 
-    public List<BaseBullet> bulletList = new ArrayList<>();
-
-    public List<BaseTank> enemies = new ArrayList<>();
-
-    public List<BaseExplode> explodes = new ArrayList<>();
-
-    public TankFactory gameFactory = new DefaultFactory();
 
     public static final int GAME_WIDTH = PropertyManager.getInt("gameWidth");
 
     public static final int GAME_HEIGHT = PropertyManager.getInt("gameHeight");;
 
-    {
-        //初始化敌方坦克
-        for (int i = 0; i < initTankCount; i++) {
-            enemies.add(gameFactory.createTank(50+i*50,200, DirectionEnum.DOWN,Group.BAD,this));
-        }
-    }
+    private GameModel gameModel = new GameModel();
+
 
     public TankFrame() throws HeadlessException {
         setSize(GAME_WIDTH, GAME_HEIGHT);
@@ -61,7 +45,6 @@ public class TankFrame extends Frame {
     }
 
     Image offScreemImage = null;
-
     @Override
     public void update(Graphics g) {
         if (offScreemImage == null) {
@@ -79,47 +62,7 @@ public class TankFrame extends Frame {
     @Override
     public void paint(Graphics g) {
 
-        Color color = g.getColor();
-        g.setColor(Color.WHITE);
-        g.drawString("子弹数量:" + bulletList.size(), 50, 100);
-        g.drawString("敌人数量:" + enemies.size(), 50, 130 );
-        g.drawString("爆炸数量:" + explodes.size(), 50, 160 );
-        g.setColor(color);
-
-        if(tank != null){
-            tank.paint(g);
-        }
-
-        //绘制子弹
-        for (int i = 0; i < bulletList.size(); i++) {
-            bulletList.get(i).paint(g);
-        }
-
-        //另一种方式删除子弹，使用迭代器来删除，该方式不会报错
-/*        for( Iterator<Bullet> iterator = bulletList.iterator();iterator.hasNext();){
-            Bullet bullet = iterator.next();
-            if(!bullet.isLive()){
-                iterator.remove();
-            }
-        }*/
-
-        //绘制敌方坦克
-        for (int i = 0; i < enemies.size(); i++) {
-            enemies.get(i).paint(g);
-        }
-
-        //子弹坦克碰撞检测
-        for(BaseBullet bullet : bulletList){
-            for(BaseTank tank : enemies){
-                bullet.collideWith(tank);
-            }
-        }
-
-        //绘制爆炸
-        for(int i=0;i<explodes.size();i++){
-            explodes.get(i).paint(g);
-        }
-
+        gameModel.paint(g);
     }
 
     class MyKeyListener extends KeyAdapter {
@@ -164,7 +107,7 @@ public class TankFrame extends Frame {
                     bD = false;
                     break;
                 case KeyEvent.VK_SPACE:
-                    tank.fire();
+                    gameModel.getMainTank().fire();
                     break;
             }
             setMainTankDir();
@@ -172,25 +115,27 @@ public class TankFrame extends Frame {
 
         private void setMainTankDir() {
 
+            Tank mainTank = gameModel.getMainTank();
+
             if (!bL && !bU && !bR && !bD) {
-                tank.setMoving(false);
+                mainTank.setMoving(false);
             }
 
             if (bL) {
-                tank.setDirection(DirectionEnum.LEFT);
-                tank.setMoving(true);
+                mainTank.setDirection(DirectionEnum.LEFT);
+                mainTank.setMoving(true);
             }
             if (bU) {
-                tank.setDirection(DirectionEnum.UP);
-                tank.setMoving(true);
+                mainTank.setDirection(DirectionEnum.UP);
+                mainTank.setMoving(true);
             }
             if (bR) {
-                tank.setDirection(DirectionEnum.RIGHT);
-                tank.setMoving(true);
+                mainTank.setDirection(DirectionEnum.RIGHT);
+                mainTank.setMoving(true);
             }
             if (bD) {
-                tank.setDirection(DirectionEnum.DOWN);
-                tank.setMoving(true);
+                mainTank.setDirection(DirectionEnum.DOWN);
+                mainTank.setMoving(true);
             }
         }
 

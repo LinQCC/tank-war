@@ -2,7 +2,7 @@ package com.lq.tank.abstractfactory;
 
 import com.lq.tank.enums.DirectionEnum;
 import com.lq.tank.enums.Group;
-import com.lq.tank.gameobject.Bullet;
+import com.lq.tank.facade.GameModel;
 import lombok.Data;
 
 import java.awt.*;
@@ -26,6 +26,8 @@ public abstract class BaseBullet {
     protected Group group;
 
     protected boolean alive = true;
+
+    protected GameModel gameModel;
 
     public abstract void paint(Graphics g);
 

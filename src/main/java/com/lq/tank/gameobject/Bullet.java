@@ -5,6 +5,7 @@ import com.lq.tank.abstractfactory.BaseBullet;
 import com.lq.tank.abstractfactory.BaseTank;
 import com.lq.tank.enums.DirectionEnum;
 import com.lq.tank.enums.Group;
+import com.lq.tank.facade.GameModel;
 import com.lq.tank.manager.PropertyManager;
 import com.lq.tank.manager.ResourceManager;
 import lombok.Data;
@@ -26,24 +27,22 @@ public class Bullet extends BaseBullet {
 
     protected Rectangle rect = new Rectangle(WIDTH,HEIGHT);
 
-    private TankFrame tankFrame;
-
-    public Bullet(int x, int y, DirectionEnum dir, Group group, TankFrame tankFrame) {
+    public Bullet(int x, int y, DirectionEnum dir, Group group, GameModel gameModel) {
         this.x = x;
         this.y = y;
         this.dir = dir;
         this.group = group;
-        this.tankFrame = tankFrame;
+        this.gameModel = gameModel;
         rect.x = x;
         rect.y = y;
 
-        tankFrame.bulletList.add(this);
+        gameModel.bulletList.add(this);
     }
 
     @Override
     public void paint(Graphics g) {
         if (!alive) {
-            tankFrame.bulletList.remove(this);
+            gameModel.bulletList.remove(this);
         }
 
         drawBullet(g);

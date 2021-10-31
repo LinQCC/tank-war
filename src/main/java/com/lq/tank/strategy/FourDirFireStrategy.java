@@ -22,7 +22,7 @@ public class FourDirFireStrategy implements FireStrategy {
 
         DirectionEnum[] dirs = DirectionEnum.values();
         for(DirectionEnum dir : dirs){
-            tank.getTankFrame().gameFactory.createBullet(bx, by, dir, tank.getGroup(), tank.getTankFrame());
+            tank.getGameModel().gameFactory.createBullet(bx, by, dir, tank.getGroup(), tank.getGameModel());
         }
 
         // 播放开火音效
