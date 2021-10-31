@@ -28,8 +28,6 @@ public class Tank extends BaseTank {
 
     private static final int SPEED = PropertyManager.getInt("tankSpeed");
 
-    protected Rectangle rect = new Rectangle(WIDTH,HEIGHT);
-
     private boolean moving = false;
 
     private Random random = new Random();
@@ -47,12 +45,7 @@ public class Tank extends BaseTank {
         if (this.group == Group.BAD) {
             moving = true;
         }
-        rect.x = x;
-        rect.y = y;
-
-        if(group == Group.GOOD){
-            fireStrategy = new FourDirFireStrategy();
-        }
+        rect = new Rectangle(x,y,WIDTH,HEIGHT);
     }
 
     @Override
@@ -63,7 +56,7 @@ public class Tank extends BaseTank {
                 gameModel.tank.setX(1000);
                 gameModel.tank.setY(1000);
             } else {
-                gameModel.enemies.remove(this);
+                gameModel.remove(this);
             }
         }
 
@@ -94,6 +87,8 @@ public class Tank extends BaseTank {
     }
 
     private void move() {
+        preX = x;
+        preY = y;
         if (moving) {
             switch (direction) {
                 case LEFT:
@@ -153,12 +148,14 @@ public class Tank extends BaseTank {
 
     public void fire() {
 
-        fireStrategy.fire(this);
+        if (alive) {
+            fireStrategy.fire(this);
+        }
     }
 
     @Override
     public void die() {
         this.alive = false;
-        gameModel.explodes.add(gameModel.gameFactory.createExplode(this.x + Tank.WIDTH / 2 - Explode.WIDTH / 2, this.y + Tank.HEIGHT / 2 - Explode.HEIGHT / 2, gameModel));
+        gameModel.add(gameModel.gameFactory.createExplode(this.x + Tank.WIDTH / 2 - Explode.WIDTH / 2, this.y + Tank.HEIGHT / 2 - Explode.HEIGHT / 2, gameModel));
     }
 }

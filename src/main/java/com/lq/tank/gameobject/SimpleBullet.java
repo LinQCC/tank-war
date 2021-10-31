@@ -37,13 +37,13 @@ public class SimpleBullet extends BaseBullet {
         rect.x = x;
         rect.y = y;
 
-        gameModel.bulletList.add(this);
+        gameModel.gameObjectList.add(this);
     }
 
     @Override
     public void paint(Graphics g) {
         if (!alive) {
-            gameModel.bulletList.remove(this);
+            gameModel.gameObjectList.remove(this);
         }
 
         drawBullet(g);
@@ -89,21 +89,4 @@ public class SimpleBullet extends BaseBullet {
         }
     }
 
-    /**
-     * 子弹与坦克的碰撞检测
-     *
-     * @param tank  坦克
-     */
-    @Override
-    public void collideWith(BaseTank tank){
-
-        if (this.group == tank.getGroup()) {
-            return;
-        }
-
-        if (this.rect.intersects(tank.getRect())) {
-            tank.die();
-            this.die();
-        }
-    }
 }

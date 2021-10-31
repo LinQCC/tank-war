@@ -61,7 +61,7 @@ public class SimpleTank extends BaseTank {
                 gameModel.tank.setX(1000);
                 gameModel.tank.setY(1000);
             } else {
-                gameModel.enemies.remove(this);
+                gameModel.gameObjectList.remove(this);
             }
         }
 
@@ -157,6 +157,6 @@ public class SimpleTank extends BaseTank {
     @Override
     public void die() {
         this.alive = false;
-        gameModel.explodes.add(gameModel.gameFactory.createExplode(this.x + SimpleTank.WIDTH / 2 - Explode.WIDTH / 2, this.y + SimpleTank.HEIGHT / 2 - Explode.HEIGHT / 2, gameModel));
+        gameModel.gameObjectList.add(gameModel.gameFactory.createExplode(this.x + SimpleTank.WIDTH / 2 - Explode.WIDTH / 2, this.y + SimpleTank.HEIGHT / 2 - Explode.HEIGHT / 2, gameModel));
     }
 }

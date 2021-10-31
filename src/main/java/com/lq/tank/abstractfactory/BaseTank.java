@@ -3,6 +3,7 @@ package com.lq.tank.abstractfactory;
 import com.lq.tank.enums.DirectionEnum;
 import com.lq.tank.enums.Group;
 import com.lq.tank.facade.GameModel;
+import com.lq.tank.gameobject.GameObject;
 import lombok.Data;
 
 import java.awt.*;
@@ -14,11 +15,11 @@ import java.awt.*;
  * @date 2021/10/28
  */
 @Data
-public abstract class BaseTank {
+public abstract class BaseTank extends GameObject {
 
-    protected int x;
+    protected int preX;
 
-    protected int y;
+    protected int preY;
 
     protected DirectionEnum direction;
 

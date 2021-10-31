@@ -19,9 +19,6 @@ import java.awt.event.WindowEvent;
  */
 public class TankFrame extends Frame {
 
-
-
-
     public static final int GAME_WIDTH = PropertyManager.getInt("gameWidth");
 
     public static final int GAME_HEIGHT = PropertyManager.getInt("gameHeight");;

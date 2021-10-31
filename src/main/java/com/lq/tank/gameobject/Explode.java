@@ -36,7 +36,7 @@ public class Explode extends BaseExplode {
     public void paint(Graphics g) {
         g.drawImage(ResourceManager.explodes[step++], this.x, this.y, null);
         if (step >= ResourceManager.explodes.length) {
-            gameModel.explodes.remove(this);
+            gameModel.gameObjectList.remove(this);
         }
     }
 }

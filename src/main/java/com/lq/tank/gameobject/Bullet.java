@@ -25,24 +25,22 @@ public class Bullet extends BaseBullet {
 
     public static final int HEIGHT = ResourceManager.bulletD.getHeight();
 
-    protected Rectangle rect = new Rectangle(WIDTH,HEIGHT);
-
     public Bullet(int x, int y, DirectionEnum dir, Group group, GameModel gameModel) {
         this.x = x;
         this.y = y;
         this.dir = dir;
         this.group = group;
         this.gameModel = gameModel;
-        rect.x = x;
-        rect.y = y;
+        rect = new Rectangle(x,y,WIDTH,HEIGHT);
 
-        gameModel.bulletList.add(this);
+        gameModel.gameObjectList.add(this);
     }
 
     @Override
     public void paint(Graphics g) {
         if (!alive) {
-            gameModel.bulletList.remove(this);
+            gameModel.remove(this);
+            return;
         }
 
         drawBullet(g);
@@ -99,21 +97,4 @@ public class Bullet extends BaseBullet {
         }
     }
 
-    /**
-     * 子弹与坦克的碰撞检测
-     *
-     * @param tank  坦克
-     */
-    @Override
-    public void collideWith(BaseTank tank){
-
-        if (this.group == tank.getGroup()) {
-            return;
-        }
-
-        if (this.rect.intersects(tank.getRect())) {
-            tank.die();
-            this.die();
-        }
-    }
 }
