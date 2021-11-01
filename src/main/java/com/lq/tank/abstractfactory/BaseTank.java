@@ -27,8 +27,6 @@ public abstract class BaseTank extends GameObject {
 
     protected Group group;
 
-    protected GameModel gameModel;
-
     protected Rectangle rect;
 
 

@@ -4,6 +4,7 @@ import com.lq.tank.abstractfactory.BaseTank;
 import com.lq.tank.audio.Audio;
 import com.lq.tank.enums.DirectionEnum;
 import com.lq.tank.enums.Group;
+import com.lq.tank.facade.GameModel;
 import com.lq.tank.gameobject.Bullet;
 import com.lq.tank.gameobject.Tank;
 import com.lq.tank.strategy.FireStrategy;
@@ -22,7 +23,7 @@ public class FourDirFireStrategy implements FireStrategy {
 
         DirectionEnum[] dirs = DirectionEnum.values();
         for(DirectionEnum dir : dirs){
-            tank.getGameModel().gameFactory.createBullet(bx, by, dir, tank.getGroup(), tank.getGameModel());
+            GameModel.getInstance().gameFactory.createBullet(bx, by, dir, tank.getGroup());
         }
 
         // 播放开火音效

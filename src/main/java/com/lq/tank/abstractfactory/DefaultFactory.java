@@ -4,7 +4,6 @@ import com.lq.tank.enums.DirectionEnum;
 import com.lq.tank.enums.Group;
 import com.lq.tank.gameobject.Bullet;
 import com.lq.tank.gameobject.Explode;
-import com.lq.tank.facade.GameModel;
 import com.lq.tank.gameobject.Tank;
 
 /**
@@ -16,20 +15,20 @@ import com.lq.tank.gameobject.Tank;
 public class DefaultFactory extends TankFactory {
 
     @Override
-    public BaseTank createTank(int x, int y, DirectionEnum dir, Group group, GameModel gameModel) {
+    public BaseTank createTank(int x, int y, DirectionEnum dir, Group group) {
 
-        return new Tank(x,y,dir,group, gameModel);
+        return new Tank(x,y,dir,group);
     }
 
     @Override
-    public BaseBullet createBullet(int x, int y, DirectionEnum dir, Group group, GameModel gameModel) {
+    public BaseBullet createBullet(int x, int y, DirectionEnum dir, Group group) {
 
-        return new Bullet(x, y, dir, group, gameModel);
+        return new Bullet(x, y, dir, group);
     }
 
     @Override
-    public BaseExplode createExplode(int x, int y, GameModel gameModel) {
+    public BaseExplode createExplode(int x, int y) {
 
-        return new Explode(x,y, gameModel);
+        return new Explode(x,y);
     }
 }

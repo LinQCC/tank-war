@@ -19,14 +19,11 @@ public class Explode extends BaseExplode {
 
     public static final int HEIGHT = ResourceManager.explodes[0].getHeight();
 
-    private GameModel gameModel;
-
     private int step = 0;
 
-    public Explode(int x, int y, GameModel gameModel) {
+    public Explode(int x, int y) {
         this.x = x;
         this.y = y;
-        this.gameModel = gameModel;
 
         // 播放爆炸音效
         new Thread(()->new Audio("audio/explode.wav").play()).start();
@@ -36,7 +33,7 @@ public class Explode extends BaseExplode {
     public void paint(Graphics g) {
         g.drawImage(ResourceManager.explodes[step++], this.x, this.y, null);
         if (step >= ResourceManager.explodes.length) {
-            gameModel.gameObjectList.remove(this);
+            GameModel.getInstance().gameObjectList.remove(this);
         }
     }
 }

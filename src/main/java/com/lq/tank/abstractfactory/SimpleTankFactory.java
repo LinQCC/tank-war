@@ -14,17 +14,17 @@ import com.lq.tank.gameobject.SimpleExplode;
 public class SimpleTankFactory extends TankFactory {
 
     @Override
-    public BaseTank createTank(int x, int y, DirectionEnum dir, Group group, GameModel gameModel) {
-        return new SimpleTank(x,y,dir,group, gameModel);
+    public BaseTank createTank(int x, int y, DirectionEnum dir, Group group) {
+        return new SimpleTank(x,y,dir,group);
     }
 
     @Override
-    public BaseBullet createBullet(int x, int y, DirectionEnum dir, Group group, GameModel gameModel) {
-        return new SimpleBullet(x,y,dir,group, gameModel);
+    public BaseBullet createBullet(int x, int y, DirectionEnum dir, Group group) {
+        return new SimpleBullet(x,y,dir,group);
     }
 
     @Override
-    public BaseExplode createExplode(int x, int y, GameModel gameModel) {
+    public BaseExplode createExplode(int x, int y) {
         return new SimpleExplode(x,y);
     }
 }

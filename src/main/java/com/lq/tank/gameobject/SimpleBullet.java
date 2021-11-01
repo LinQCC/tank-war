@@ -28,22 +28,21 @@ public class SimpleBullet extends BaseBullet {
 
     private GameModel gameModel;
 
-    public SimpleBullet(int x, int y, DirectionEnum dir, Group group, GameModel gameModel) {
+    public SimpleBullet(int x, int y, DirectionEnum dir, Group group) {
         this.x = x;
         this.y = y;
         this.dir = dir;
         this.group = group;
-        this.gameModel = gameModel;
         rect.x = x;
         rect.y = y;
 
-        gameModel.gameObjectList.add(this);
+        GameModel.getInstance().add(this);
     }
 
     @Override
     public void paint(Graphics g) {
         if (!alive) {
-            gameModel.gameObjectList.remove(this);
+            GameModel.getInstance().remove(this);
         }
 
         drawBullet(g);

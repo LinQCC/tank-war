@@ -34,18 +34,17 @@ public class Tank extends BaseTank {
 
     private FireStrategy fireStrategy = new DefaultFireStrategy();
 
-    private GameModel gameModel;
-
-    public Tank(int x, int y, DirectionEnum direction, Group group, GameModel gameModel) {
+    public Tank(int x, int y, DirectionEnum direction, Group group) {
         this.x = x;
         this.y = y;
         this.direction = direction;
         this.group = group;
-        this.gameModel = gameModel;
         if (this.group == Group.BAD) {
             moving = true;
         }
         rect = new Rectangle(x,y,WIDTH,HEIGHT);
+
+        GameModel.getInstance().add(this);
     }
 
     @Override
@@ -53,10 +52,10 @@ public class Tank extends BaseTank {
 
         if (!alive) {
             if (this.group == Group.GOOD) {
-                gameModel.tank.setX(1000);
-                gameModel.tank.setY(1000);
+                GameModel.getInstance().getMainTank().setX(1000);
+                GameModel.getInstance().getMainTank().setY(1000);
             } else {
-                gameModel.remove(this);
+                GameModel.getInstance().remove(this);
             }
         }
 
@@ -156,6 +155,6 @@ public class Tank extends BaseTank {
     @Override
     public void die() {
         this.alive = false;
-        gameModel.add(gameModel.gameFactory.createExplode(this.x + Tank.WIDTH / 2 - Explode.WIDTH / 2, this.y + Tank.HEIGHT / 2 - Explode.HEIGHT / 2, gameModel));
+        GameModel.getInstance().add(GameModel.getInstance().gameFactory.createExplode(this.x + Tank.WIDTH / 2 - Explode.WIDTH / 2, this.y + Tank.HEIGHT / 2 - Explode.HEIGHT / 2));
     }
 }

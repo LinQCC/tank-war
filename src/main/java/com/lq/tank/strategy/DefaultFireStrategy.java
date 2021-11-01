@@ -3,6 +3,7 @@ package com.lq.tank.strategy;
 import com.lq.tank.abstractfactory.BaseTank;
 import com.lq.tank.audio.Audio;
 import com.lq.tank.enums.Group;
+import com.lq.tank.facade.GameModel;
 import com.lq.tank.gameobject.Bullet;
 import com.lq.tank.gameobject.Tank;
 
@@ -18,7 +19,7 @@ public class DefaultFireStrategy implements FireStrategy {
         int bx = tank.getX() + Tank.WIDTH / 2 - Bullet.WIDTH / 2;
         int by = tank.getY() + Tank.HEIGHT / 2 - Bullet.HEIGHT / 2;
 
-        tank.getGameModel().gameFactory.createBullet(bx, by, tank.getDirection(), tank.getGroup(), tank.getGameModel());
+        GameModel.getInstance().gameFactory.createBullet(bx, by, tank.getDirection(), tank.getGroup());
 
         // 播放开火音效
         if (tank.getGroup() == Group.GOOD) {

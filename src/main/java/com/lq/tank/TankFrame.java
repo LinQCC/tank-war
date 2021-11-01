@@ -21,10 +21,7 @@ public class TankFrame extends Frame {
 
     public static final int GAME_WIDTH = PropertyManager.getInt("gameWidth");
 
-    public static final int GAME_HEIGHT = PropertyManager.getInt("gameHeight");;
-
-    private GameModel gameModel = new GameModel();
-
+    public static final int GAME_HEIGHT = PropertyManager.getInt("gameHeight");
 
     public TankFrame() throws HeadlessException {
         setSize(GAME_WIDTH, GAME_HEIGHT);
@@ -59,7 +56,7 @@ public class TankFrame extends Frame {
     @Override
     public void paint(Graphics g) {
 
-        gameModel.paint(g);
+        GameModel.getInstance().paint(g);
     }
 
     class MyKeyListener extends KeyAdapter {
@@ -104,7 +101,7 @@ public class TankFrame extends Frame {
                     bD = false;
                     break;
                 case KeyEvent.VK_SPACE:
-                    gameModel.getMainTank().fire();
+                    GameModel.getInstance().getMainTank().fire();
                     break;
             }
             setMainTankDir();
@@ -112,7 +109,7 @@ public class TankFrame extends Frame {
 
         private void setMainTankDir() {
 
-            Tank mainTank = gameModel.getMainTank();
+            Tank mainTank = GameModel.getInstance().getMainTank();
 
             if (!bL && !bU && !bR && !bD) {
                 mainTank.setMoving(false);

@@ -27,8 +27,6 @@ public abstract class BaseBullet extends GameObject {
 
     protected Rectangle rect;
 
-    protected GameModel gameModel;
-
     public abstract void paint(Graphics g);
 
     public void die() {

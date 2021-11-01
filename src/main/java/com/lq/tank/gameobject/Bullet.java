@@ -2,7 +2,6 @@ package com.lq.tank.gameobject;
 
 import com.lq.tank.TankFrame;
 import com.lq.tank.abstractfactory.BaseBullet;
-import com.lq.tank.abstractfactory.BaseTank;
 import com.lq.tank.enums.DirectionEnum;
 import com.lq.tank.enums.Group;
 import com.lq.tank.facade.GameModel;
@@ -25,21 +24,20 @@ public class Bullet extends BaseBullet {
 
     public static final int HEIGHT = ResourceManager.bulletD.getHeight();
 
-    public Bullet(int x, int y, DirectionEnum dir, Group group, GameModel gameModel) {
+    public Bullet(int x, int y, DirectionEnum dir, Group group) {
         this.x = x;
         this.y = y;
         this.dir = dir;
         this.group = group;
-        this.gameModel = gameModel;
         rect = new Rectangle(x,y,WIDTH,HEIGHT);
 
-        gameModel.gameObjectList.add(this);
+        GameModel.getInstance().gameObjectList.add(this);
     }
 
     @Override
     public void paint(Graphics g) {
         if (!alive) {
-            gameModel.remove(this);
+            GameModel.getInstance().remove(this);
             return;
         }
 

@@ -1,14 +1,12 @@
 package com.lq.tank.facade;
 
 import com.lq.tank.abstractfactory.*;
-import com.lq.tank.collide.BulletTankCollider;
-import com.lq.tank.collide.Collider;
-import com.lq.tank.collide.ColliderChain;
-import com.lq.tank.collide.TankTankCollider;
+import com.lq.tank.collide.*;
 import com.lq.tank.enums.DirectionEnum;
 import com.lq.tank.enums.Group;
 import com.lq.tank.gameobject.GameObject;
 import com.lq.tank.gameobject.Tank;
+import com.lq.tank.gameobject.Wall;
 import com.lq.tank.manager.PropertyManager;
 import lombok.Data;
 
@@ -25,13 +23,15 @@ import java.util.List;
 @Data
 public class GameModel {
 
+    private static GameModel INSTANCE = new GameModel();
+
     int initTankCount = PropertyManager.getInt("initTankCount");
 
-    public Tank tank = new Tank(500, 500, DirectionEnum.DOWN, Group.GOOD,this);
+    public List<GameObject> gameObjectList = new ArrayList<>();
+
+    public Tank tank;
 
     public TankFactory gameFactory = new DefaultFactory();
-
-    public List<GameObject> gameObjectList = new ArrayList<>();
 
     Collider bulletTankCollider = new BulletTankCollider();
 
@@ -39,16 +39,40 @@ public class GameModel {
 
     ColliderChain colliderChain = new ColliderChain();
 
-    public GameModel() {
 
-        gameObjectList.add(tank);
+    static {
+        INSTANCE.init();
+    }
 
-        //初始化敌方坦克
+    private GameModel() {
+
+    }
+
+    private void init(){
+
+        // 初始化己方坦克
+        tank = new Tank(500, 500, DirectionEnum.DOWN, Group.GOOD);
+
+        // 初始化敌方坦克
         for (int i = 0; i < initTankCount; i++) {
-            gameObjectList.add(gameFactory.createTank(50+i*100,200, DirectionEnum.DOWN,Group.BAD,this));
+            gameFactory.createTank(50 + i * 100, 200, DirectionEnum.DOWN, Group.BAD);
         }
+
+        new Wall(200, 400, 200, 50);
+        new Wall(600, 400, 200, 50);
+
+
         colliderChain.add(new BulletTankCollider());
         colliderChain.add(new TankTankCollider());
+        colliderChain.add(new TankWallCollider());
+        colliderChain.add(new BulletWallCollider());
+    }
+
+
+    // 单例模式
+    public static GameModel getInstance() {
+
+        return INSTANCE;
     }
 
     /**
@@ -56,7 +80,7 @@ public class GameModel {
      *
      * @param g 画笔
      */
-    public void paint(Graphics g){
+    public void paint(Graphics g) {
 
         // 绘制状态栏
 /*        Color color = g.getColor();
@@ -72,17 +96,12 @@ public class GameModel {
         }
 
         // 碰撞检测
-        for(int i=0;i<gameObjectList.size();i++){
-            for(int j=i+1;j<gameObjectList.size();j++){
-                GameObject o1 =gameObjectList.get(i);
+        for (int i = 0; i < gameObjectList.size(); i++) {
+            for (int j = i + 1; j < gameObjectList.size(); j++) {
+                GameObject o1 = gameObjectList.get(i);
                 GameObject o2 = gameObjectList.get(j);
 
-                colliderChain.collide(o1,o2);
-/*                // 检测子弹和坦克的碰撞
-                bulletTankCollider.collide(o1,o2);
-
-                // 检测坦克和坦克之间的碰撞
-                tankTankCollider.collide(o1,o2);*/
+                colliderChain.collide(o1, o2);
             }
         }
 
@@ -91,7 +110,7 @@ public class GameModel {
     /**
      * 获取玩家坦克
      *
-     * @return  玩家坦克
+     * @return 玩家坦克
      */
     public Tank getMainTank() {
 
@@ -101,9 +120,9 @@ public class GameModel {
     /**
      * 添加游戏物体
      *
-     * @param gameObject    游戏物体
+     * @param gameObject 游戏物体
      */
-    public void add(GameObject gameObject){
+    public void add(GameObject gameObject) {
         gameObjectList.add(gameObject);
     }
 
@@ -111,9 +130,9 @@ public class GameModel {
     /**
      * 移除游戏物体
      *
-     * @param gameObject    游戏物体
+     * @param gameObject 游戏物体
      */
-    public void remove(GameObject gameObject){
+    public void remove(GameObject gameObject) {
         gameObjectList.remove(gameObject);
     }
 }

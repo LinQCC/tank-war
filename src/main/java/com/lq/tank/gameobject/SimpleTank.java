@@ -36,12 +36,11 @@ public class SimpleTank extends BaseTank {
 
     private FireStrategy fireStrategy = new DefaultFireStrategy();
 
-    public SimpleTank(int x, int y, DirectionEnum direction, Group group, GameModel gameModel) {
+    public SimpleTank(int x, int y, DirectionEnum direction, Group group) {
         this.x = x;
         this.y = y;
         this.direction = direction;
         this.group = group;
-        this.gameModel = gameModel;
         if (this.group == Group.BAD) {
             moving = true;
         }
@@ -51,6 +50,8 @@ public class SimpleTank extends BaseTank {
         if(group == Group.GOOD){
             fireStrategy = new FourDirFireStrategy();
         }
+
+        GameModel.getInstance().add(this);
     }
 
     @Override
@@ -58,10 +59,10 @@ public class SimpleTank extends BaseTank {
 
         if (!alive) {
             if (this.group == Group.GOOD) {
-                gameModel.tank.setX(1000);
-                gameModel.tank.setY(1000);
+                GameModel.getInstance().getMainTank().setX(1000);
+                GameModel.getInstance().getMainTank().setY(1000);
             } else {
-                gameModel.gameObjectList.remove(this);
+                GameModel.getInstance().remove(this);
             }
         }
 
@@ -157,6 +158,7 @@ public class SimpleTank extends BaseTank {
     @Override
     public void die() {
         this.alive = false;
-        gameModel.gameObjectList.add(gameModel.gameFactory.createExplode(this.x + SimpleTank.WIDTH / 2 - Explode.WIDTH / 2, this.y + SimpleTank.HEIGHT / 2 - Explode.HEIGHT / 2, gameModel));
+        GameModel.getInstance().add(
+                GameModel.getInstance().gameFactory.createExplode(this.x + SimpleTank.WIDTH / 2 - Explode.WIDTH / 2, this.y + SimpleTank.HEIGHT / 2 - Explode.HEIGHT / 2));
     }
 }
