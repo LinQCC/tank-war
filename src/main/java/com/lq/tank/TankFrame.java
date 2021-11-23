@@ -103,6 +103,12 @@ public class TankFrame extends Frame {
                 case KeyEvent.VK_SPACE:
                     GameModel.getInstance().getMainTank().fire();
                     break;
+                case KeyEvent.VK_S:
+                    GameModel.getInstance().save();
+                    break;
+                case KeyEvent.VK_L:
+                    GameModel.getInstance().load();
+                    break;
             }
             setMainTankDir();
         }

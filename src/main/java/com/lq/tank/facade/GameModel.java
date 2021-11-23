@@ -11,6 +11,7 @@ import com.lq.tank.manager.PropertyManager;
 import lombok.Data;
 
 import java.awt.*;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,7 +22,7 @@ import java.util.List;
  * @date 2021/10/31
  */
 @Data
-public class GameModel {
+public class GameModel implements Serializable {
 
     private static GameModel INSTANCE = new GameModel();
 
@@ -134,5 +135,40 @@ public class GameModel {
      */
     public void remove(GameObject gameObject) {
         gameObjectList.remove(gameObject);
+    }
+
+    /**
+     * 保存功能
+     */
+    public void save(){
+        File f = new File("C:\\Users\\ASUS\\Desktop\\tank_save.dat");
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(f))) {
+            oos.writeObject(tank);
+            oos.writeObject(gameObjectList);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * 载入存档
+     */
+    public void load(){
+
+        File f = new File("C:\\Users\\ASUS\\Desktop\\tank_save.dat");
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(f))) {
+
+            Tank myTank = (Tank)ois.readObject();
+            List<GameObject> gameObjectList = (List<GameObject>) ois.readObject();
+            this.tank = myTank;
+            this.gameObjectList = gameObjectList;
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 }

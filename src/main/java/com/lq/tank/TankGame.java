@@ -13,9 +13,9 @@ public class TankGame {
         TankFrame tankFrame = new TankFrame();
 
         // 循环播放背景音乐
-        new Thread(()->{
+        /*new Thread(()->{
             new Audio("audio/war1.wav").loop();
-        }).start();
+        }).start();*/
 
         // 每隔一段时间重绘
         new Thread(()->{
